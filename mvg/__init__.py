@@ -8,6 +8,13 @@ departure_url = "https://www.mvg.de/fahrinfo/api/departure/"
 departure_url_postfix = "?footway=0"
 nearby_url = "https://www.mvg.de/fahrinfo/api/location/nearby"
 
+def _perform_api_request(url):
+    opener = urllib2.build_opener()
+    opener.addheaders = [('X-MVG-Authorization-Key', api_key)]
+    response = opener.open(url)
+    return json.loads(response.read())
+
+
 def get_nearby_stations(lat, log):
     if lat == 0 or log == 0:
         return None
@@ -16,10 +23,8 @@ def get_nearby_stations(lat, log):
         raise TypeError()
 
     url = nearby_url + "?latitude=%f&longitude=%f" % (lat, log)
-    opener = urllib2.build_opener()
-    opener.addheaders = [('X-MVG-Authorization-Key', api_key)]
-    response = opener.open(url)
-    results = json.loads(response.read())
+
+    results = _perform_api_request(url)
     return results['locations']
 
 def get_id_for_station(station_name):
@@ -29,10 +34,8 @@ def get_id_for_station(station_name):
     None is returned if no match was found.
     """
     url = query_url + station_name
-    opener = urllib2.build_opener()
-    opener.addheaders = [('X-MVG-Authorization-Key', api_key)]
-    response = opener.open(url)
-    results = json.loads(response.read())
+    results = _perform_api_request(url)
+
     for result in results['locations']:
         if result['type'] == 'station':
             return result['id']
@@ -59,10 +62,7 @@ class Station:
         Also, the relative time in minutes is given in departureTimeMinutes
         """
         url = departure_url + str(self.station_id) + departure_url_postfix
-        opener = urllib2.build_opener()
-        opener.addheaders = [('X-MVG-Authorization-Key', api_key)]
-        response = opener.open(url)
-        departures = json.loads(response.read())['departures']
+        departures = _perform_api_request(url)['departures']
         for departure in departures:
             # For some reason, mvg gives you a Unix timestamp, but in milliseconds.
             # Here, we convert it to a standard unix timestamp.
