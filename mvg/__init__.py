@@ -6,7 +6,21 @@ api_key = "5af1beca494712ed38d313714d4caff6"
 query_url = "https://www.mvg.de/fahrinfo/api/location/query?q="
 departure_url = "https://www.mvg.de/fahrinfo/api/departure/"
 departure_url_postfix = "?footway=0"
+nearby_url = "https://www.mvg.de/fahrinfo/api/location/nearby"
 
+def get_nearby_stations(lat, log):
+    if lat == 0 or log == 0:
+        return None
+
+    if not (isinstance(lat, float) and isinstance(log, float)):
+        raise TypeError()
+
+    url = nearby_url + "?latitude=%f&longitude=%f" % (lat, log)
+    opener = urllib2.build_opener()
+    opener.addheaders = [('X-MVG-Authorization-Key', api_key)]
+    response = opener.open(url)
+    results = json.loads(response.read())
+    return results['locations']
 
 def get_id_for_station(station_name):
     """
@@ -16,7 +30,7 @@ def get_id_for_station(station_name):
     """
     url = query_url + station_name
     opener = urllib2.build_opener()
-    opener.addheaders = [('X-MVG-Authorization-Key', '5af1beca494712ed38d313714d4caff6')]
+    opener.addheaders = [('X-MVG-Authorization-Key', api_key)]
     response = opener.open(url)
     results = json.loads(response.read())
     for result in results['locations']:
@@ -46,7 +60,7 @@ class Station:
         """
         url = departure_url + str(self.station_id) + departure_url_postfix
         opener = urllib2.build_opener()
-        opener.addheaders = [('X-MVG-Authorization-Key', '5af1beca494712ed38d313714d4caff6')]
+        opener.addheaders = [('X-MVG-Authorization-Key', api_key)]
         response = opener.open(url)
         departures = json.loads(response.read())['departures']
         for departure in departures:
