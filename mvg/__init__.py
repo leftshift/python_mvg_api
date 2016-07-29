@@ -50,8 +50,10 @@ class Station:
     def __init__(self, station):
         if isinstance(station, str) or isinstance(station, unicode):
             self.station_id = get_id_for_station(station)
+            if self.station_id == None:
+                raise NameError("No matching station found")
         elif isinstance(station, int):
-            self.station_id = station_id
+            self.station_id = station
         else:
             raise ValueError("Please provide a Station Name or ID")
 
