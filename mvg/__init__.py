@@ -33,7 +33,7 @@ def get_id_for_station(station_name):
     If more than one station match, the first result is given.
     None is returned if no match was found.
     """
-    url = query_url + station_name
+    url = query_url + urllib2.quote(station_name)
     results = _perform_api_request(url)
 
     for result in results['locations']:
