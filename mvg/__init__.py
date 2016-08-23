@@ -37,7 +37,10 @@ def get_id_for_station(station_name):
     return station['id']
 
 def get_station(station):
-    url = query_url + urllib2.quote(station)
+    if isinstance(station, int):
+        url = query_url + str(station)
+    else:
+        url = query_url + urllib2.quote(station)
     results = _perform_api_request(url)
 
     for result in results['locations']:
