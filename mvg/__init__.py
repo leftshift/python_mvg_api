@@ -7,6 +7,7 @@ query_url = "https://www.mvg.de/fahrinfo/api/location/query?q="
 departure_url = "https://www.mvg.de/fahrinfo/api/departure/"
 departure_url_postfix = "?footway=0"
 nearby_url = "https://www.mvg.de/fahrinfo/api/location/nearby"
+routing_url = "https://www.mvg.de/fahrinfo/api/routing/?"
 
 def _perform_api_request(url):
     opener = urllib2.build_opener()
@@ -43,6 +44,33 @@ def get_station(station):
     for result in results['locations']:
         if result['type'] == 'station':
             return result
+
+def get_route(from_station_id, to_station_id, time=None, arrival_time=False, max_time_to_start=None, max_time_to_dest=None):
+    url = routing_url
+    options = []
+    if from_station_id:
+        options.append("fromStation=" + str(from_station_id))
+    else:
+        raise ValueError("A starting station must be given")
+    if to_station_id:
+        options.append("toStation=" + str(to_station_id))
+    else:
+        raise ValueError("An ending station must be given")
+
+    if time:
+        options.append("time=" + str(time))
+    if arrival_time:
+        options.append("arrival=true")
+    if max_time_to_start:
+        options.append("maxTravelTimeFootwayToStation=" + str(max_time_to_start))
+    if max_time_to_dest:
+        options.append("maxTravelTimeFootwayToDestination=" + str(max_time_to_dest))
+
+    options_url = "&".join(options)
+    url = routing_url + options_url
+    print url
+    results = _perform_api_request(url)
+    return results
 
 class Station:
     """
