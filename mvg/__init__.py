@@ -78,9 +78,11 @@ def get_route(from_station_id, to_station_id, time=None, arrival_time=False, max
         raise ValueError("An ending station must be given")
 
     if time:
+        if isinstance(time, datetime):
+            time = _convert_time(time)
         options.append("time=" + str(time))
-    if arrival_time:
-        options.append("arrival=true")
+        if arrival_time:
+            options.append("arrival=true")
     if max_time_to_start:
         options.append("maxTravelTimeFootwayToStation=" + str(max_time_to_start))
     if max_time_to_dest:
