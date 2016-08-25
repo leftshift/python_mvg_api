@@ -94,7 +94,7 @@ def get_route(from_station_id, to_station_id, time=None, arrival_time=False, max
     for connection in results["connectionList"]:
         connection["departure_datetime"] = _convert_time(connection["departure"])
         connection["arrival_datetime"] = _convert_time(connection["arrival"])
-    return results["connection_list"]
+    return results["connectionList"]
 
 
 class Station:
