@@ -78,7 +78,7 @@ def get_route(from_station_id, to_station_id, time=None, arrival_time=False, max
         raise ValueError("An ending station must be given")
 
     if time:
-        if isinstance(time, datetime):
+        if isinstance(time, datetime.datetime):
             time = _convert_time(time)
         options.append("time=" + str(time))
         if arrival_time:
