@@ -1,6 +1,7 @@
 # coding=utf-8
 
 import urllib2, json, datetime
+from time import mktime
 
 api_key = "5af1beca494712ed38d313714d4caff6"
 query_url = "https://www.mvg.de/fahrinfo/api/location/query?q="
@@ -15,6 +16,18 @@ def _perform_api_request(url):
     response = opener.open(url)
     return json.loads(response.read())
 
+def _convert_time(time):
+    """
+    Takes datetime.datetime() or unix time in ms
+    """
+    if isinstance(time, datetime.datetime):
+        return mktime(time)
+    else:
+        try:
+            timestamp = time / 1000
+            return datetime.datetime.fromtimestamp(timestamp)
+        except Exception as e:
+            raise
 
 def get_nearby_stations(lat, log):
     if lat == 0 or log == 0:
@@ -49,6 +62,10 @@ def get_station(station):
             return result
 
 def get_route(from_station_id, to_station_id, time=None, arrival_time=False, max_time_to_start=None, max_time_to_dest=None):
+    """
+    returns connectionList = [] of possible routes.
+    Adds departure_datetime and arrival_datetime to array as datetime objects.
+    """
     url = routing_url
     options = []
     if from_station_id:
@@ -71,9 +88,12 @@ def get_route(from_station_id, to_station_id, time=None, arrival_time=False, max
 
     options_url = "&".join(options)
     url = routing_url + options_url
-    print url
     results = _perform_api_request(url)
+    for connection in results["connectionList"]:
+        connection["departure_datetime"] = _convert_time(connection["departure"])
+        connection["arrival_datetime"] = _convert_time(connection["arrival"])
     return results
+
 
 class Station:
     """
@@ -102,10 +122,8 @@ class Station:
         departures = _perform_api_request(url)['departures']
         for departure in departures:
             # For some reason, mvg gives you a Unix timestamp, but in milliseconds.
-            # Here, we convert it to a standard unix timestamp.
-            departure['departureTime'] = departure['departureTime'] / 1000
-
-            time = datetime.datetime.fromtimestamp(departure['departureTime'])
+            # Here, we convert it to datetime
+            time = _convert_time(departure['departureTime'])
             relative_time = time - datetime.datetime.now()
             departure[u'departureTimeMinutes'] = relative_time.seconds // 60
         return departures
