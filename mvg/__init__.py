@@ -47,19 +47,25 @@ def get_id_for_station(station_name):
     If more than one station match, the first result is given.
     None is returned if no match was found.
     """
-    station = get_station(station_name)
+    station = get_stations(station_name)[1]
     return station['id']
 
-def get_station(station):
-    if isinstance(station, int):
-        url = query_url + str(station)
+def get_locations(query):
+    if isinstance(query, int):
+        url = query_url + str(query)
     else:
-        url = query_url + urllib2.quote(station)
+        url = query_url + urllib2.quote(query)
     results = _perform_api_request(url)
+    return results["locations"]
 
-    for result in results['locations']:
+
+def get_stations(station):
+    results = get_locations(station)
+    stations = []
+    for result in results:
         if result['type'] == 'station':
-            return result
+            stations.append(result)
+    return stations
 
 def get_route(from_station_id, to_station_id, time=None, arrival_time=False, max_time_to_start=None, max_time_to_dest=None):
     """
