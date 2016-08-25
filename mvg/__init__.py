@@ -47,7 +47,7 @@ def get_id_for_station(station_name):
     If more than one station match, the first result is given.
     None is returned if no match was found.
     """
-    station = get_stations(station_name)[1]
+    station = get_stations(station_name)[0]
     return station['id']
 
 def get_locations(query):
