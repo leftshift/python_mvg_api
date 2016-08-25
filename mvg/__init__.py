@@ -21,7 +21,7 @@ def _convert_time(time):
     Takes datetime.datetime() or unix time in ms
     """
     if isinstance(time, datetime.datetime):
-        return mktime(time)
+        return int(mktime(time.timetuple()))*1000
     else:
         try:
             timestamp = time / 1000
