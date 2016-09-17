@@ -67,21 +67,29 @@ def get_stations(station):
             stations.append(result)
     return stations
 
-def get_route(from_station_id, to_station_id, time=None, arrival_time=False, max_time_to_start=None, max_time_to_dest=None):
+def get_route(start, dest, time=None, arrival_time=False, max_walk_time_to_start=None, max_walk_time_to_dest=None):
     """
     returns connectionList = [] of possible routes.
     Adds departure_datetime and arrival_datetime to array as datetime objects.
     """
     url = routing_url
     options = []
-    if from_station_id:
-        options.append("fromStation=" + str(from_station_id))
+
+    if isinstance(start, int):
+        options.append("fromStation=" + str(start))
+    elif isinstance(start, tuple) and len(start) == 2:
+        options.append("fromLatitude=" + str(start[0]))
+        options.append("fromLongitude=" + str(start[1]))
     else:
-        raise ValueError("A starting station must be given")
-    if to_station_id:
-        options.append("toStation=" + str(to_station_id))
+        raise ValueError("A start must be given; either int station id or tuple latitude longitude")
+
+    if isinstance(dest, int):
+        options.append("toStation=" + str(dest))
+    elif isinstance(dest, tuple) and len(dest) == 2:
+        options.append("toLatitude=" + str(dest[0]))
+        options.append("toLongitude=" + str(dest[1]))
     else:
-        raise ValueError("An ending station must be given")
+        raise ValueError("A destination must be given; either int station id or tuple latitude longitude")
 
     if time:
         if isinstance(time, datetime.datetime):
@@ -89,10 +97,10 @@ def get_route(from_station_id, to_station_id, time=None, arrival_time=False, max
         options.append("time=" + str(time))
         if arrival_time:
             options.append("arrival=true")
-    if max_time_to_start:
-        options.append("maxTravelTimeFootwayToStation=" + str(max_time_to_start))
-    if max_time_to_dest:
-        options.append("maxTravelTimeFootwayToDestination=" + str(max_time_to_dest))
+    if max_walk_time_to_start:
+        options.append("maxTravelTimeFootwayToStation=" + str(max_walk_time_to_start))
+    if max_walk_time_to_dest:
+        options.append("maxTravelTimeFootwayToDestination=" + str(max_walk_time_to_dest))
 
     options_url = "&".join(options)
     url = routing_url + options_url
