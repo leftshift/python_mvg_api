@@ -1,0 +1,305 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>python_mvg_departures – Munich Public Transport made simple &#8212; python_mvg_departures 1.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="top" title="python_mvg_departures 1.1 documentation" href="#" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="python-mvg-departures-munich-public-transport-made-simple">
+<h1>python_mvg_departures – Munich Public Transport made simple<a class="headerlink" href="#python-mvg-departures-munich-public-transport-made-simple" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<div class="section" id="intro">
+<h2>Intro<a class="headerlink" href="#intro" title="Permalink to this headline">¶</a></h2>
+<p>Not too long ago, MVG (aka Münchner Verkehrsgesellschaft) relaunched their <a class="reference external" href="http://mvg.de">Website</a>, which now actually utilizes a JSON api! (I know, crazy, right?) This python module tries to provide super easy, gluten free <a class="footnote-reference" href="#id2" id="id1">[1]</a> access to most aspects of the mvg api.</p>
+<p>It offers:</p>
+<ul class="simple">
+<li>The next departures for any station in the MVV (duh)<ul>
+<li>This includes S-Bahn and Schienenersatzverkehr</li>
+</ul>
+</li>
+<li>Listing nearby stations based on geolocation</li>
+<li>Routing from station to station<ul>
+<li>Routing from anywhere to anywhere (coming soon!)</li>
+</ul>
+</li>
+</ul>
+<p>Take a look at example.py, it shows some basic concepts, or at the rest of the docs, where every aspect is hopefully adequately documented.</p>
+<table class="docutils footnote" frame="void" id="id2" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>mvg.de uses stuff like an api key (although <em>they only give it to themselves</em>) and Unix time in milliseconds (although the last four digits are always 0). Whith this module, you won&#8217;t have to worry about all that.</td></tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="module-mvg">
+<span id="module-documentation"></span><h2>Module documentation<a class="headerlink" href="#module-mvg" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="mvg.Station">
+<em class="property">class </em><code class="descclassname">mvg.</code><code class="descname">Station</code><span class="sig-paren">(</span><em>station</em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.Station" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gives you a proxy to get the next departures for a particular
+station.</p>
+<p>Either give it an exact station name (like &#8220;Hauptbahnhof&#8221;)
+or a station_id.</p>
+<p>Deprecated-ish: This is not really all that useful.
+Just using <a class="reference internal" href="#mvg.get_id_for_station" title="mvg.get_id_for_station"><code class="xref py py-func docutils literal"><span class="pre">get_id_for_station()</span></code></a> and <a class="reference internal" href="#mvg.get_departures" title="mvg.get_departures"><code class="xref py py-func docutils literal"><span class="pre">get_departures()</span></code></a>
+really is the nicer way in most cases.</p>
+<dl class="method">
+<dt id="mvg.Station.get_departures">
+<code class="descname">get_departures</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mvg.Station.get_departures" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the departures for the station object.
+Pretty much the same like module-level-<a class="reference internal" href="#mvg.get_departures" title="mvg.get_departures"><code class="xref py py-func docutils literal"><span class="pre">get_departures()</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="mvg.get_departures">
+<code class="descclassname">mvg.</code><code class="descname">get_departures</code><span class="sig-paren">(</span><em>station_id</em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.get_departures" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the next departures for <cite>station_id</cite>.</p>
+<p>To get the <cite>station_id</cite> associated with a station name,
+use <a class="reference internal" href="#mvg.get_id_for_station" title="mvg.get_id_for_station"><code class="xref py py-func docutils literal"><span class="pre">get_id_for_station()</span></code></a>.</p>
+<p>Returns a list like:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s1">&#39;departureTimeMinutes&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="s1">&#39;destination&#39;</span><span class="p">:</span> <span class="s1">&#39;Laimer Platz&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;sev&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="s1">&#39;departureId&#39;</span><span class="p">:</span> <span class="mi">1188266868</span><span class="p">,</span>
+        <span class="s1">&#39;live&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="s1">&#39;departureTime&#39;</span><span class="p">:</span> <span class="mi">1478644495000</span><span class="p">,</span>
+        <span class="s1">&#39;lineBackgroundColor&#39;</span><span class="p">:</span> <span class="s1">&#39;#b78730&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="s1">&#39;5&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;product&#39;</span><span class="p">:</span> <span class="s1">&#39;u&#39;</span>
+    <span class="p">},</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p><cite>departureTimeMinutes</cite>, the time left to the departure in minutes,
+is added to the response from the api for your convenience.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="mvg.get_id_for_station">
+<code class="descclassname">mvg.</code><code class="descname">get_id_for_station</code><span class="sig-paren">(</span><em>station_name</em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.get_id_for_station" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the station_id for the given station name.</p>
+<p>If more than one station match, the first result is given.
+<cite>None</cite> is returned if no match was found.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="mvg.get_locations">
+<code class="descclassname">mvg.</code><code class="descname">get_locations</code><span class="sig-paren">(</span><em>query</em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.get_locations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns all matches from the search for the given query string.</p>
+<p><cite>query</cite> can either be a name of a station or of a street, square, etc.</p>
+<p>Returns a list wich looks somewhat like this:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s1">&#39;lines&#39;</span><span class="p">:</span>
+            <span class="p">{</span>
+            <span class="s1">&#39;nachtbus&#39;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s1">&#39;ubahn&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;5&#39;</span><span class="p">,</span> <span class="s1">&#39;7&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;tram&#39;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s1">&#39;sbahn&#39;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s1">&#39;otherlines&#39;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s1">&#39;nachttram&#39;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s1">&#39;bus&#39;</span><span class="p">:</span> <span class="p">[]</span>
+            <span class="p">},</span>
+        <span class="s1">&#39;hasLiveData&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="s1">&#39;place&#39;</span><span class="p">:</span> <span class="s1">&#39;München&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;products&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;u&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">1060</span><span class="p">,</span>
+        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;nearbystation&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Innsbrucker Ring&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;hasZoomData&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="s1">&#39;distance&#39;</span><span class="p">:</span> <span class="mi">59</span><span class="p">,</span>
+        <span class="s1">&#39;longitude&#39;</span><span class="p">:</span> <span class="mf">11.619138</span><span class="p">,</span>
+        <span class="s1">&#39;latitude&#39;</span><span class="p">:</span> <span class="mf">48.120408</span>
+    <span class="p">},</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="mvg.get_nearby_stations">
+<code class="descclassname">mvg.</code><code class="descname">get_nearby_stations</code><span class="sig-paren">(</span><em>lat</em>, <em>lon</em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.get_nearby_stations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stations nearby the given location.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>lat</strong> (<em>float</em>) &#8211; Latitude</li>
+<li><strong>lon</strong> (<em>float</em>) &#8211; and longitude of the desired location.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Returns a list which is formated in this fassion:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s1">&#39;lines&#39;</span><span class="p">:</span>
+            <span class="p">{</span>
+            <span class="s1">&#39;nachtbus&#39;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s1">&#39;ubahn&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;5&#39;</span><span class="p">,</span> <span class="s1">&#39;7&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;tram&#39;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s1">&#39;sbahn&#39;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s1">&#39;otherlines&#39;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s1">&#39;nachttram&#39;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s1">&#39;bus&#39;</span><span class="p">:</span> <span class="p">[]</span>
+            <span class="p">},</span>
+        <span class="s1">&#39;hasLiveData&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="s1">&#39;place&#39;</span><span class="p">:</span> <span class="s1">&#39;München&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;products&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;u&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">1060</span><span class="p">,</span>
+        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;nearbystation&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Innsbrucker Ring&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;hasZoomData&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="s1">&#39;distance&#39;</span><span class="p">:</span> <span class="mi">59</span><span class="p">,</span>
+        <span class="s1">&#39;longitude&#39;</span><span class="p">:</span> <span class="mf">11.619138</span><span class="p">,</span>
+        <span class="s1">&#39;latitude&#39;</span><span class="p">:</span> <span class="mf">48.120408</span>
+     <span class="p">},</span>
+ <span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="mvg.get_route">
+<code class="descclassname">mvg.</code><code class="descname">get_route</code><span class="sig-paren">(</span><em>start</em>, <em>dest</em>, <em>time=None</em>, <em>arrival_time=False</em>, <em>max_walk_time_to_start=None</em>, <em>max_walk_time_to_dest=None</em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.get_route" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plans a route from start to dest</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>start</strong> (<em>int</em>) &#8211; The <cite>station_id</cite> of the starting station</li>
+<li><strong>dest</strong> (<em>int</em>) &#8211; <cite>station_id</cite> of the destination station</li>
+<li><strong>time</strong> (<em>datetime, optional</em>) &#8211; </li>
+<li><strong>arrival_time</strong> (<em>bool, optional</em>) &#8211; Specifies if <cite>time</cite> is the starting time (which is default) or
+the desired time of arrival.</li>
+<li><strong>max_walk_time_to_dest</strong> (<em>max_walk_time_to_start,</em>) &#8211; Maximum time of walking in minutes required to reach the start/dest.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="mvg.get_stations">
+<code class="descclassname">mvg.</code><code class="descname">get_stations</code><span class="sig-paren">(</span><em>station</em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.get_stations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Like <a class="reference internal" href="#mvg.get_locations" title="mvg.get_locations"><code class="xref py py-func docutils literal"><span class="pre">get_locations()</span></code></a>, but filters out all results which
+are not stations.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="indices-and-tables">
+<h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
+</ul>
+<ul class="simple">
+<li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">python_mvg_departures – Munich Public Transport made simple</a><ul>
+<li><a class="reference internal" href="#intro">Intro</a></li>
+<li><a class="reference internal" href="#module-mvg">Module documentation</a></li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, Adrian.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.8</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="_sources/index.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
