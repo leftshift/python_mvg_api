@@ -1,6 +1,6 @@
 # coding=utf-8
 
-import urllib2
+import requests
 import json
 import datetime
 from time import mktime
@@ -14,10 +14,8 @@ routing_url = "https://www.mvg.de/fahrinfo/api/routing/?"
 
 
 def _perform_api_request(url):
-    opener = urllib2.build_opener()
-    opener.addheaders = [('X-MVG-Authorization-Key', api_key)]
-    response = opener.open(url)
-    return json.loads(response.read())
+    resp = requests.get(url, headers={'X-MVG-Authorization-Key': api_key})
+    return resp.json()
 
 
 def _convert_time(time):
@@ -61,7 +59,7 @@ def get_locations(query):
     if isinstance(query, int):
         url = query_url + str(query)
     else:
-        url = query_url + urllib2.quote(query)
+        url = query_url + query
     results = _perform_api_request(url)
     return results["locations"]
 
@@ -148,7 +146,7 @@ class Station:
     """
 
     def __init__(self, station):
-        if isinstance(station, str) or isinstance(station, unicode):
+        if isinstance(station, str):
             self.station_id = get_id_for_station(station)
             if self.station_id is None:
                 raise NameError("No matching station found")
