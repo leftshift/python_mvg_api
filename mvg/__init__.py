@@ -1,6 +1,6 @@
 # coding=utf-8
 
-import urllib2
+import requests
 import json
 import datetime
 from time import mktime
@@ -14,10 +14,8 @@ routing_url = "https://www.mvg.de/fahrinfo/api/routing/?"
 
 
 def _perform_api_request(url):
-    opener = urllib2.build_opener()
-    opener.addheaders = [('X-MVG-Authorization-Key', api_key)]
-    response = opener.open(url)
-    return json.loads(response.read())
+    resp = requests.get(url, headers={'X-MVG-Authorization-Key': api_key})
+    return resp.json()
 
 
 def _convert_time(time):
