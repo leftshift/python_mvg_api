@@ -11,6 +11,8 @@ departure_url = "https://www.mvg.de/fahrinfo/api/departure/"
 departure_url_postfix = "?footway=0"
 nearby_url = "https://www.mvg.de/fahrinfo/api/location/nearby"
 routing_url = "https://www.mvg.de/fahrinfo/api/routing/?"
+interruptions_url = "https://www.mvg.de/.rest/betriebsaenderungen\
+                     /api/interruptions"
 
 
 def _perform_api_request(url):
@@ -255,6 +257,12 @@ def get_departures(station_id):
         relative_time = time - datetime.datetime.now()
         departure[u'departureTimeMinutes'] = relative_time.seconds // 60
     return departures
+
+
+def get_interruptions():
+    url = interruptions_url
+    interruptions = _perform_api_request(url)
+    return interruptions
 
 
 class Station:
