@@ -6,7 +6,8 @@ import datetime
 from time import mktime
 
 api_key = "5af1beca494712ed38d313714d4caff6"
-query_url = "https://www.mvg.de/fahrinfo/api/location/query?q="
+query_url_name = "https://www.mvg.de/fahrinfo/api/location/queryWeb?q=" #for station names
+query_url_id = "https://www.mvg.de/fahrinfo/api/location/query?q=" #for station ids
 departure_url = "https://www.mvg.de/fahrinfo/api/departure/"
 departure_url_postfix = "?footway=0"
 nearby_url = "https://www.mvg.de/fahrinfo/api/location/nearby"
@@ -137,10 +138,13 @@ def get_locations(query):
         ]
 
     """
-    if isinstance(query, int):
-        url = query_url + str(query)
-    else:
-        url = query_url + query
+    try:
+        query = int(query)  # converts station ids to int if thay aren't already
+    except(ValueError):  # happens if it is a station name
+        url = query_url_name + query
+    else:  # happens if it is a station id
+        url = query_url_id + str(query)
+
     results = _perform_api_request(url)
     return results["locations"]
 
