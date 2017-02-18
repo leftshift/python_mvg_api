@@ -6,7 +6,7 @@ import datetime
 from time import mktime
 
 api_key = "5af1beca494712ed38d313714d4caff6"
-query_url = "https://www.mvg.de/fahrinfo/api/location/queryWeb?q="
+query_url = "https://www.mvg.de/fahrinfo/api/location/query?q="
 departure_url = "https://www.mvg.de/fahrinfo/api/departure/"
 departure_url_postfix = "?footway=0"
 nearby_url = "https://www.mvg.de/fahrinfo/api/location/nearby"
