@@ -1,0 +1,46 @@
+"""Library for fetching departure and route data from the Munich public transport organisation MVG
+
+Github:
+https://github.com/leftshift/python_mvg_departures
+Docs:
+http://python-mvg-departures.readthedocs.io/en/latest/
+"""
+
+# Always prefer setuptools over distutils
+from setuptools import setup, find_packages
+# To use a consistent encoding
+from codecs import open
+from os import path
+
+here = path.abspath(path.dirname(__file__))
+
+# Get the long description from the README file
+with open(path.join(here, 'README.md'), encoding='utf-8') as f:
+    long_description = f.read()
+
+setup(
+    name='mvg-departures',
+    version='1.0.0',
+    description='Library for fetching departure and route data from the Munich public transport organisation MVG',
+    long_description=long_description,
+    url='https://github.com/leftshift/python_mvg_departures',
+
+    author='leftshift',
+    author_email='leftshiftlp@gmail.com',
+    license='MIT',
+    classifiers=[
+        'Development Status :: 4 - Beta',
+        'License :: OSI Approved :: MIT License',
+        'Intended Audience :: Developers'
+        'Topic :: Internet :: WWW/HTTP :: Dynamic Content'
+
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.3',
+        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
+    ],
+
+    packages=['mvg'],
+    install_requires=['requests'],
+)
