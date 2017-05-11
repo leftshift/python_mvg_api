@@ -1,6 +1,6 @@
 # coding=utf-8
 
-from mvg import *
+from mvg_api import *
 
 obersendling = Station("Obersendling")
 departures = obersendling.get_departures()

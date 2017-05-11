@@ -19,7 +19,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(
-    name='mvg_departures',
+    name='mvg_api',
     version='1.0.0',
     description='Library for fetching departure and route data from the Munich public transport organisation MVG',
     long_description=long_description,
@@ -31,8 +31,8 @@ setup(
     classifiers=[
         'Development Status :: 4 - Beta',
         'License :: OSI Approved :: MIT License',
-        'Intended Audience :: Developers'
-        'Topic :: Internet :: WWW/HTTP :: Dynamic Content'
+        'Intended Audience :: Developers',
+        'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
 
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
@@ -41,6 +41,6 @@ setup(
         'Programming Language :: Python :: 3.5',
     ],
 
-    packages=['mvg'],
+    packages=['mvg_api'],
     install_requires=['requests'],
 )
