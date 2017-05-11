@@ -19,7 +19,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(
-    name='mvg-departures',
+    name='mvg_departures',
     version='1.0.0',
     description='Library for fetching departure and route data from the Munich public transport organisation MVG',
     long_description=long_description,
