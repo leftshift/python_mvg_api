@@ -35,7 +35,7 @@ Take a look at example.py, it shows some basic concepts, or at the rest of the d
 Module documentation
 --------------------
 
-.. automodule:: mvg
+.. automodule:: mvg_api
       :members:
 
 Indices and tables
