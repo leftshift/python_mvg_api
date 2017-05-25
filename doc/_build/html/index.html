@@ -17,7 +17,8 @@
         VERSION:     '1.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
@@ -25,7 +26,6 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="top" title="python_mvg_departures 1.1 documentation" href="#" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -68,33 +68,33 @@
 </tbody>
 </table>
 </div>
-<div class="section" id="module-mvg">
-<span id="module-documentation"></span><h2>Module documentation<a class="headerlink" href="#module-mvg" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-mvg_api">
+<span id="module-documentation"></span><h2>Module documentation<a class="headerlink" href="#module-mvg_api" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="mvg.Station">
-<em class="property">class </em><code class="descclassname">mvg.</code><code class="descname">Station</code><span class="sig-paren">(</span><em>station</em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.Station" title="Permalink to this definition">¶</a></dt>
+<dt id="mvg_api.Station">
+<em class="property">class </em><code class="descclassname">mvg_api.</code><code class="descname">Station</code><span class="sig-paren">(</span><em>station</em><span class="sig-paren">)</span><a class="headerlink" href="#mvg_api.Station" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gives you a proxy to get the next departures for a particular
 station.</p>
 <p>Either give it an exact station name (like &#8220;Hauptbahnhof&#8221;)
 or a station_id.</p>
 <p>Deprecated-ish: This is not really all that useful.
-Just using <a class="reference internal" href="#mvg.get_id_for_station" title="mvg.get_id_for_station"><code class="xref py py-func docutils literal"><span class="pre">get_id_for_station()</span></code></a> and <a class="reference internal" href="#mvg.get_departures" title="mvg.get_departures"><code class="xref py py-func docutils literal"><span class="pre">get_departures()</span></code></a>
+Just using <a class="reference internal" href="#mvg_api.get_id_for_station" title="mvg_api.get_id_for_station"><code class="xref py py-func docutils literal"><span class="pre">get_id_for_station()</span></code></a> and <a class="reference internal" href="#mvg_api.get_departures" title="mvg_api.get_departures"><code class="xref py py-func docutils literal"><span class="pre">get_departures()</span></code></a>
 really is the nicer way in most cases.</p>
 <dl class="method">
-<dt id="mvg.Station.get_departures">
-<code class="descname">get_departures</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mvg.Station.get_departures" title="Permalink to this definition">¶</a></dt>
+<dt id="mvg_api.Station.get_departures">
+<code class="descname">get_departures</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mvg_api.Station.get_departures" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets the departures for the station object.
-Pretty much the same like module-level-<a class="reference internal" href="#mvg.get_departures" title="mvg.get_departures"><code class="xref py py-func docutils literal"><span class="pre">get_departures()</span></code></a></p>
+Pretty much the same like module-level-<a class="reference internal" href="#mvg_api.get_departures" title="mvg_api.get_departures"><code class="xref py py-func docutils literal"><span class="pre">get_departures()</span></code></a></p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="function">
-<dt id="mvg.get_departures">
-<code class="descclassname">mvg.</code><code class="descname">get_departures</code><span class="sig-paren">(</span><em>station_id</em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.get_departures" title="Permalink to this definition">¶</a></dt>
+<dt id="mvg_api.get_departures">
+<code class="descclassname">mvg_api.</code><code class="descname">get_departures</code><span class="sig-paren">(</span><em>station_id</em><span class="sig-paren">)</span><a class="headerlink" href="#mvg_api.get_departures" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the next departures for <cite>station_id</cite>.</p>
 <p>To get the <cite>station_id</cite> associated with a station name,
-use <a class="reference internal" href="#mvg.get_id_for_station" title="mvg.get_id_for_station"><code class="xref py py-func docutils literal"><span class="pre">get_id_for_station()</span></code></a>.</p>
+use <a class="reference internal" href="#mvg_api.get_id_for_station" title="mvg_api.get_id_for_station"><code class="xref py py-func docutils literal"><span class="pre">get_id_for_station()</span></code></a>.</p>
 <p>Returns a list like:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span>
     <span class="p">{</span>
@@ -116,16 +116,16 @@ is added to the response from the api for your convenience.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="mvg.get_id_for_station">
-<code class="descclassname">mvg.</code><code class="descname">get_id_for_station</code><span class="sig-paren">(</span><em>station_name</em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.get_id_for_station" title="Permalink to this definition">¶</a></dt>
+<dt id="mvg_api.get_id_for_station">
+<code class="descclassname">mvg_api.</code><code class="descname">get_id_for_station</code><span class="sig-paren">(</span><em>station_name</em><span class="sig-paren">)</span><a class="headerlink" href="#mvg_api.get_id_for_station" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the station_id for the given station name.</p>
 <p>If more than one station match, the first result is given.
 <cite>None</cite> is returned if no match was found.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="mvg.get_locations">
-<code class="descclassname">mvg.</code><code class="descname">get_locations</code><span class="sig-paren">(</span><em>query</em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.get_locations" title="Permalink to this definition">¶</a></dt>
+<dt id="mvg_api.get_locations">
+<code class="descclassname">mvg_api.</code><code class="descname">get_locations</code><span class="sig-paren">(</span><em>query</em><span class="sig-paren">)</span><a class="headerlink" href="#mvg_api.get_locations" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns all matches from the search for the given query string.</p>
 <p><cite>query</cite> can either be a name of a station or of a street, square, etc.</p>
 <p>Returns a list wich looks somewhat like this:</p>
@@ -158,8 +158,8 @@ is added to the response from the api for your convenience.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="mvg.get_nearby_stations">
-<code class="descclassname">mvg.</code><code class="descname">get_nearby_stations</code><span class="sig-paren">(</span><em>lat</em>, <em>lon</em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.get_nearby_stations" title="Permalink to this definition">¶</a></dt>
+<dt id="mvg_api.get_nearby_stations">
+<code class="descclassname">mvg_api.</code><code class="descname">get_nearby_stations</code><span class="sig-paren">(</span><em>lat</em>, <em>lon</em><span class="sig-paren">)</span><a class="headerlink" href="#mvg_api.get_nearby_stations" title="Permalink to this definition">¶</a></dt>
 <dd><p>Stations nearby the given location.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -203,8 +203,8 @@ is added to the response from the api for your convenience.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="mvg.get_route">
-<code class="descclassname">mvg.</code><code class="descname">get_route</code><span class="sig-paren">(</span><em>start</em>, <em>dest</em>, <em>time=None</em>, <em>arrival_time=False</em>, <em>max_walk_time_to_start=None</em>, <em>max_walk_time_to_dest=None</em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.get_route" title="Permalink to this definition">¶</a></dt>
+<dt id="mvg_api.get_route">
+<code class="descclassname">mvg_api.</code><code class="descname">get_route</code><span class="sig-paren">(</span><em>start</em>, <em>dest</em>, <em>time=None</em>, <em>arrival_time=False</em>, <em>max_walk_time_to_start=None</em>, <em>max_walk_time_to_dest=None</em><span class="sig-paren">)</span><a class="headerlink" href="#mvg_api.get_route" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plans a route from start to dest</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -213,10 +213,10 @@ is added to the response from the api for your convenience.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>start</strong> (<em>int</em>) &#8211; The <cite>station_id</cite> of the starting station</li>
 <li><strong>dest</strong> (<em>int</em>) &#8211; <cite>station_id</cite> of the destination station</li>
-<li><strong>time</strong> (<em>datetime, optional</em>) &#8211; </li>
-<li><strong>arrival_time</strong> (<em>bool, optional</em>) &#8211; Specifies if <cite>time</cite> is the starting time (which is default) or
+<li><strong>time</strong> (<em>datetime</em><em>, </em><em>optional</em>) &#8211; </li>
+<li><strong>arrival_time</strong> (<em>bool</em><em>, </em><em>optional</em>) &#8211; Specifies if <cite>time</cite> is the starting time (which is default) or
 the desired time of arrival.</li>
-<li><strong>max_walk_time_to_dest</strong> (<em>max_walk_time_to_start,</em>) &#8211; Maximum time of walking in minutes required to reach the start/dest.</li>
+<li><strong>max_walk_time_to_dest</strong> (<em>max_walk_time_to_start</em><em>,</em><em></em>) &#8211; Maximum time of walking in minutes required to reach the start/dest.</li>
 </ul>
 </td>
 </tr>
@@ -225,9 +225,9 @@ the desired time of arrival.</li>
 </dd></dl>
 
 <dl class="function">
-<dt id="mvg.get_stations">
-<code class="descclassname">mvg.</code><code class="descname">get_stations</code><span class="sig-paren">(</span><em>station</em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.get_stations" title="Permalink to this definition">¶</a></dt>
-<dd><p>Like <a class="reference internal" href="#mvg.get_locations" title="mvg.get_locations"><code class="xref py py-func docutils literal"><span class="pre">get_locations()</span></code></a>, but filters out all results which
+<dt id="mvg_api.get_stations">
+<code class="descclassname">mvg_api.</code><code class="descname">get_stations</code><span class="sig-paren">(</span><em>station</em><span class="sig-paren">)</span><a class="headerlink" href="#mvg_api.get_stations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Like <a class="reference internal" href="#mvg_api.get_locations" title="mvg_api.get_locations"><code class="xref py py-func docutils literal"><span class="pre">get_locations()</span></code></a>, but filters out all results which
 are not stations.</p>
 </dd></dl>
 
@@ -253,7 +253,7 @@ are not stations.</p>
   <ul>
 <li><a class="reference internal" href="#">python_mvg_departures – Munich Public Transport made simple</a><ul>
 <li><a class="reference internal" href="#intro">Intro</a></li>
-<li><a class="reference internal" href="#module-mvg">Module documentation</a></li>
+<li><a class="reference internal" href="#module-mvg_api">Module documentation</a></li>
 <li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
 </ul>
 </li>
@@ -268,7 +268,7 @@ are not stations.</p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/index.txt"
+      <li><a href="_sources/index.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -290,11 +290,11 @@ are not stations.</p>
       &copy;2016, Adrian.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.8</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
       
       |
-      <a href="_sources/index.txt"
+      <a href="_sources/index.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 
