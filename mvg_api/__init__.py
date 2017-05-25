@@ -168,10 +168,10 @@ def get_route(start, dest,
 
     Parameters
     ----------
-    start : int
-        The `station_id` of the starting station
-    dest : int
-        `station_id` of the destination station
+    start : int/tuple
+        The `station_id` of the starting station or a tuple of coordinates
+    dest : int/tuple
+        `station_id` of the destination station or a tuple of coordinates
     time : datetime, optional
     arrival_time : bool, optional
         Specifies if `time` is the starting time (which is default) or
