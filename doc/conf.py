@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-# python_mvg_departures documentation build configuration file, created by
+# python_mvg_api documentation build configuration file, created by
 # sphinx-quickstart on Tue Nov  8 21:17:56 2016.
 #
 # This file is execfile()d with the current directory set to its
@@ -57,7 +57,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'python_mvg_departures'
+project = 'python_mvg_api'
 copyright = '2016, Adrian'
 author = 'Adrian'
 
@@ -142,7 +142,7 @@ html_theme = 'alabaster'
 # The name for this set of Sphinx documents.
 # "<project> v<release> documentation" by default.
 #
-# html_title = 'python_mvg_departures v1.1'
+# html_title = 'python_mvg_api v1.1'
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
 #
@@ -242,7 +242,7 @@ html_static_path = ['_static']
 # html_search_scorer = 'scorer.js'
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'python_mvg_departuresdoc'
+htmlhelp_basename = 'python_mvg_apidoc'
 
 # -- Options for LaTeX output ---------------------------------------------
 
@@ -268,7 +268,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'python_mvg_departures.tex', 'python\\_mvg\\_departures Documentation',
+    (master_doc, 'python_mvg_api.tex', 'python\\_mvg\\_departures Documentation',
      'Adrian', 'manual'),
 ]
 
@@ -310,7 +310,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'python_mvg_departures', 'python_mvg_departures Documentation',
+    (master_doc, 'python_mvg_api', 'python_mvg_api Documentation',
      [author], 1)
 ]
 
@@ -325,8 +325,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'python_mvg_departures', 'python_mvg_departures Documentation',
-     author, 'python_mvg_departures', 'One line description of project.',
+    (master_doc, 'python_mvg_api', 'python_mvg_api Documentation',
+     author, 'python_mvg_api', 'One line description of project.',
      'Miscellaneous'),
 ]
 

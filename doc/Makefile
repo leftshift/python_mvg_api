@@ -91,9 +91,9 @@ qthelp:
 	@echo
 	@echo "Build finished; now you can run "qcollectiongenerator" with the" \
 	      ".qhcp project file in $(BUILDDIR)/qthelp, like this:"
-	@echo "# qcollectiongenerator $(BUILDDIR)/qthelp/python_mvg_departures.qhcp"
+	@echo "# qcollectiongenerator $(BUILDDIR)/qthelp/python_mvg_api.qhcp"
 	@echo "To view the help file:"
-	@echo "# assistant -collectionFile $(BUILDDIR)/qthelp/python_mvg_departures.qhc"
+	@echo "# assistant -collectionFile $(BUILDDIR)/qthelp/python_mvg_api.qhc"
 
 .PHONY: applehelp
 applehelp:
@@ -110,8 +110,8 @@ devhelp:
 	@echo
 	@echo "Build finished."
 	@echo "To view the help file:"
-	@echo "# mkdir -p $$HOME/.local/share/devhelp/python_mvg_departures"
-	@echo "# ln -s $(BUILDDIR)/devhelp $$HOME/.local/share/devhelp/python_mvg_departures"
+	@echo "# mkdir -p $$HOME/.local/share/devhelp/python_mvg_api"
+	@echo "# ln -s $(BUILDDIR)/devhelp $$HOME/.local/share/devhelp/python_mvg_api"
 	@echo "# devhelp"
 
 .PHONY: epub

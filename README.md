@@ -1,4 +1,4 @@
-# python_mvg_departures
+# python_mvg_api
 
 A library for fetching departures, routes and service interruptions from Munich Transport Authority MVG, using the newer JSON-api on mvg.de
 

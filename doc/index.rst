@@ -1,9 +1,9 @@
-.. python_mvg_departures documentation master file, created by
+.. python_mvg_api documentation master file, created by
    sphinx-quickstart on Tue Nov  8 21:17:56 2016.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-python_mvg_departures – Munich Public Transport made simple
+python_mvg_api – Munich Public Transport made simple
 ===========================================================
 
 
