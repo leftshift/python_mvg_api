@@ -20,7 +20,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='mvg_api',
-    version='1.1.0',
+    version='1.1.1',
     description='Library for fetching departure and route data from the Munich public transport organisation MVG',
     long_description=long_description,
     url='https://github.com/leftshift/python_mvg_api',
@@ -29,7 +29,7 @@ setup(
     author_email='leftshiftlp@gmail.com',
     license='MIT',
     classifiers=[
-        'Development Status :: 4 - Beta',
+        'Development Status :: 5 - Production/Stable',
         'License :: OSI Approved :: MIT License',
         'Intended Audience :: Developers',
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
