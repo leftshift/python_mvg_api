@@ -6,14 +6,12 @@ import datetime
 from time import mktime
 
 api_key = "5af1beca494712ed38d313714d4caff6"
-query_url_name = "https://www.mvg.de/fahrinfo/api/location/queryWeb?q=" #for station names
-query_url_id = "https://www.mvg.de/fahrinfo/api/location/query?q=" #for station ids
-departure_url = "https://www.mvg.de/fahrinfo/api/departure/"
-departure_url_postfix = "?footway=0"
-nearby_url = "https://www.mvg.de/fahrinfo/api/location/nearby"
+query_url_name = "https://www.mvg.de/fahrinfo/api/location/queryWeb?q={name}" #for station names
+query_url_id = "https://www.mvg.de/fahrinfo/api/location/query?q={id}" #for station ids
+departure_url = "https://www.mvg.de/fahrinfo/api/departure/{id}?footway=0"
+nearby_url = "https://www.mvg.de/fahrinfo/api/location/nearby?latitude={lat}&longitude={lon}"
 routing_url = "https://www.mvg.de/fahrinfo/api/routing/?"
-interruptions_url = "https://www.mvg.de/.rest/betriebsaenderungen\
-                     /api/interruptions"
+interruptions_url = "https://www.mvg.de/.rest/betriebsaenderungen/api/interruptions"
 
 
 def _perform_api_request(url):
@@ -89,7 +87,7 @@ def get_nearby_stations(lat, lon):
     if not (isinstance(lat, float) and isinstance(lon, float)):
         raise TypeError()
 
-    url = nearby_url + "?latitude=%f&longitude=%f" % (lat, lon)
+    url = nearby_url.format(lat=lat, lon=lon)
 
     results = _perform_api_request(url)
     return results['locations']
@@ -141,9 +139,9 @@ def get_locations(query):
     try:
         query = int(query)  # converts station ids to int if thay aren't already
     except(ValueError):  # happens if it is a station name
-        url = query_url_name + query
+        url = query_url_name.format(name=query)
     else:  # happens if it is a station id
-        url = query_url_id + str(query)
+        url = query_url_id.format(id=str(query))
 
     results = _perform_api_request(url)
     return results["locations"]
@@ -252,7 +250,7 @@ def get_departures(station_id):
         raise TypeError("Please give the int station_id of the station.\
                          You can find it out by running \
                          get_id_for_station('Station name')")
-    url = departure_url + str(station_id) + departure_url_postfix
+    url = departure_url.format(id=str(station_id))
     departures = _perform_api_request(url)['departures']
     for departure in departures:
         # For some reason, mvg gives you a Unix timestamp, but in milliseconds.
@@ -295,7 +293,7 @@ class Station:
         """Gets the departures for the station object.
         Pretty much the same like module-level-:func:`get_departures`
         """
-        url = departure_url + str(self.station_id) + departure_url_postfix
+        url = departure_url.format(id=str(self.station_id))
         departures = _perform_api_request(url)['departures']
         for departure in departures:
             # For some reason, mvg gives you a Unix timestamp in milliseconds.
