@@ -99,7 +99,10 @@ def get_id_for_station(station_name):
     If more than one station match, the first result is given.
     `None` is returned if no match was found.
     """
-    station = get_stations(station_name)[0]
+    try:
+        station = get_stations(station_name)[0]
+    except IndexError:
+        return None
     return station['id']
 
 
