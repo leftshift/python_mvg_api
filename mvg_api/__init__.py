@@ -69,7 +69,7 @@ def get_nearby_stations(lat, lon):
                     },
                 'hasLiveData': True,
                 'place': 'München',
-                'products': ['u'],
+                'products': ['BUS', 'TRAM', 'UBAHN', 'SBAHN'],
                 'id': 1060,
                 'type': 'nearbystation',
                 'name': 'Innsbrucker Ring',
