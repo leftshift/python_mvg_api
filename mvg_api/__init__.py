@@ -283,25 +283,15 @@ class Station:
     """
 
     def __init__(self, station):
-        if isinstance(station, str):
-            self.station_id = get_id_for_station(station)
-            if self.station_id is None:
-                raise NameError("No matching station found")
-        elif isinstance(station, int):
-            self.station_id = station
+        matching_stations = get_stations(station)
+        if matching_stations == []:
+            raise NameError("No matching station found")
         else:
-            raise ValueError("Please provide a Station Name or ID")
+            self.id = matching_stations[0]["id"]
+            self.name = matching_stations[0]["name"]
 
     def get_departures(self):
-        """Gets the departures for the station object.
-        Pretty much the same like module-level-:func:`get_departures`
-        """
-        url = departure_url.format(id=str(self.station_id))
-        departures = _perform_api_request(url)['departures']
-        for departure in departures:
-            # For some reason, mvg gives you a Unix timestamp in milliseconds.
-            # Here, we convert it to a datetime object
-            time = _convert_time(departure['departureTime'])
-            relative_time = time - datetime.datetime.now()
-            departure[u'departureTimeMinutes'] = relative_time.seconds // 60
-        return departures
+        return get_departures(self.id)
+
+    def __repr__(self):
+        return "Station(id=%s, name='%s')" % (self.id, self.name)
