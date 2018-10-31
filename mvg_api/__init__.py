@@ -223,6 +223,15 @@ def get_route(start, dest,
         connection["arrival_datetime"] = _convert_time(connection["arrival"])
     return results["connectionList"]
 
+def get_departures_by_name(station_name):
+    
+    station_id = get_id_for_station(station_name)
+
+    if station_id is None:
+        raise TypeError("invalid station name")
+
+    return get_departures(station_id)
+
 
 def get_departures(station_id):
     """Get the next departures for `station_id`.
