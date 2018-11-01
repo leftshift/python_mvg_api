@@ -1,4 +1,4 @@
-from __init__ import *
+from mvg_api.__init__ import *
 
 from colr import color
 from texttable import Texttable
@@ -47,7 +47,7 @@ def display_title_bar():
     print(color("*************** MVG - Departures ***************", fore=MVG_FG, back=MVG_BG) )
     print(color("************************************************", fore=MVG_FG, back=MVG_BG) + '\n')
 
-def display_departures(station_name, limit=5):
+def display_departures(station_name, limit=20):
     departuresJSON = get_departures_by_name(station_name)
     departuresJSON = departuresJSON[:limit]
 
@@ -56,7 +56,7 @@ def display_departures(station_name, limit=5):
     table = Texttable()
     table.set_deco(Texttable.HEADER)
     table.set_cols_dtype( ['t', 't', 'i'])
-    table.set_cols_align( ['c', 'l', 'c'] )
+    table.set_cols_align( ['l', 'l', 'r'] )
     
     rows = []
     rows.append(['\x1b[38;5;231m\x1b[48;5;23mline\x1b[0m', 'destination', 'departure (min)'])
@@ -66,13 +66,14 @@ def display_departures(station_name, limit=5):
     print( color(table.draw(), fore=MVG_FG, back=MVG_BG) )
     
 
+path = os.path.dirname(os.path.abspath(__file__))
 
 if len(sys.argv) == 2:
     display_departures(sys.argv[1])
-    recent = open("recent.txt", "w")
+    recent = open(path + "/recent.txt", "w")
     recent.write(sys.argv[1])
 elif len(sys.argv) == 1:
-    recent = open("recent.txt", "r")
+    recent = open(path + "/recent.txt", "r")
     display_departures(recent.read())
 else:
     display_departures("Studentenstadt")
