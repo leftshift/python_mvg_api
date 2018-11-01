@@ -1,14 +1,27 @@
-# A console program to request the departure time from the MVG
+# python_mvg_api
 
-The python program is based on the library by [leftshift](https://github.com/leftshift/python_mvg_api). Check out his work for more info on the API.
+A library for fetching departures, routes and service interruptions from Munich Transport Authority MVG, using the newer JSON-api on mvg.de
+
+## Get it on pypi:
+`pip install mvg-api`
+
+
+Then, `import mvg_api`.
+
+To get the id for a particular Station, use something like `mvg_api.get_id_for_station("Hauptbahnhof")`.
+
+You can use this id for getting departures with `mvg_api.get_departures(6)` and use it as the start or end of a route.
+
+## Documentation
+[Read the Documentation](http://python-mvg-departures.readthedocs.io/en/latest/?)
+
+# Example Application: console program to request the departure time
 
 ## Getting started
 
-`git clone https://github.com/frankzl/python_mvg_console_program`
+Add the following line to your `.zshrc`
 
-Then add the following line to your `.zshrc`
-
-`alias mvg="python3.5 $HOME/path/to/directory/python_mvg_console_program/get_info.py"`
+`alias mvg="python3.5 $HOME/path/to/directory/python_mvg_api/get_info.py"`
 
 Probably not the cleanest way to do it, but it's the only way I know at the moment :)
 
