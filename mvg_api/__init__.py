@@ -159,10 +159,7 @@ def get_stations(station):
     are not stations.
     """
     results = get_locations(station)
-    stations = []
-    for result in results:
-        if result['type'] == 'station':
-            stations.append(result)
+    stations = [result for result in results if result['type'] == 'station']
     return stations
 
 
