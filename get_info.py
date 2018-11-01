@@ -1,4 +1,4 @@
-from mvg_api.__init__ import *
+from mvg_api.mvg_api_requests import *
 
 from colr import color
 from texttable import Texttable
