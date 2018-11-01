@@ -5,19 +5,19 @@ import json
 import datetime
 from time import mktime
 
-api_key = "5af1beca494712ed38d313714d4caff6"
+API_KEY = "5af1beca494712ed38d313714d4caff6"
 BASE_URL = "https://www.mvg.de/"
 FAHRINFO_API_PATH = "fahrinfo/api/"
-query_url_name = BASE_URL + FAHRINFO_API_PATH + "location/queryWeb?q={name}" #for station names
-query_url_id = BASE_URL + FAHRINFO_API_PATH + "location/query?q={id}" #for station ids
-departure_url = BASE_URL + FAHRINFO_API_PATH + "departure/{id}?footway=0"
-nearby_url = BASE_URL + FAHRINFO_API_PATH + "location/nearby?latitude={lat}&longitude={lon}"
-routing_url = BASE_URL + FAHRINFO_API_PATH + "routing/?"
-interruptions_url = BASE_URL + ".rest/betriebsaenderungen/api/interruptions"
+QUERY_URL_WITH_NAME = BASE_URL + FAHRINFO_API_PATH + "location/queryWeb?q={name}" #for station names
+QUERY_URL_WITH_ID = BASE_URL + FAHRINFO_API_PATH + "location/query?q={id}" #for station ids
+DEPARTURE_URL = BASE_URL + FAHRINFO_API_PATH + "departure/{id}?footway=0"
+NEARBY_URL = BASE_URL + FAHRINFO_API_PATH + "location/nearby?latitude={lat}&longitude={lon}"
+ROUTING_URL = BASE_URL + FAHRINFO_API_PATH + "routing/?"
+INTERRUPTIONS_URL = BASE_URL + ".rest/betriebsaenderungen/api/interruptions"
 
 
 def _perform_api_request(url):
-    resp = requests.get(url, headers={'X-MVG-Authorization-Key': api_key})
+    resp = requests.get(url, headers={'X-MVG-Authorization-Key': API_KEY})
     return resp.json()
 
 
@@ -89,7 +89,7 @@ def get_nearby_stations(lat, lon):
     if not (isinstance(lat, float) and isinstance(lon, float)):
         raise TypeError()
 
-    url = nearby_url.format(lat=lat, lon=lon)
+    url = NEARBY_URL.format(lat=lat, lon=lon)
 
     results = _perform_api_request(url)
     return results['locations']
@@ -148,9 +148,9 @@ def get_locations(query):
     try:
         query = int(query)  # converts station ids to int if thay aren't already
     except(ValueError):  # happens if it is a station name
-        url = query_url_name.format(name=query)
+        url = QUERY_URL_WITH_NAME.format(name=query)
     else:  # happens if it is a station id
-        url = query_url_id.format(id=str(query))
+        url = QUERY_URL_WITH_ID.format(id=str(query))
 
     results = _perform_api_request(url)
     return results["locations"]
@@ -217,7 +217,7 @@ def get_route(start, dest,
                        str(max_walk_time_to_dest))
 
     options_url = "&".join(options)
-    url = routing_url + options_url
+    url = ROUTING_URL + options_url
     results = _perform_api_request(url)
     for connection in results["connectionList"]:
         connection["departure_datetime"] = \
@@ -267,7 +267,7 @@ def get_departures(station_id):
                          You can find it out by running \
                          get_id_for_station('Station name')")
 
-    url = departure_url.format(id=str(station_id))
+    url = DEPARTURE_URL.format(id=str(station_id))
     departures = _perform_api_request(url)['departures']
 
     for departure in departures:
@@ -281,5 +281,5 @@ def get_departures(station_id):
 
 
 def get_interruptions():
-    interruptions = _perform_api_request(interruptions_url)
+    interruptions = _perform_api_request(INTERRUPTIONS_URL)
     return interruptions
