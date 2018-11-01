@@ -1,3 +1,6 @@
+# ignore recent.txt file
+recent.txt
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
