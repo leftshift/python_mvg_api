@@ -42,10 +42,16 @@ class Departure:
         
 
 def display_title_bar():
-    # os.system('clear')
-    print(color("************************************************", fore=MVG_FG, back=MVG_BG))
-    print(color("*************** MVG - Departures ***************", fore=MVG_FG, back=MVG_BG) )
-    print(color("************************************************", fore=MVG_FG, back=MVG_BG) + '\n')
+    """ Print a title bar. """
+
+    color_it_mvg = lambda x: color(x, fore=MVG_FG, back=MVG_BG)
+    bar_mvg_colored = color_it_mvg("*" * 48)
+    fifteen_stars = "*" * 15
+
+    print(bar_mvg_colored)
+    print(color_it_mvg(fifteen_stars + " MVG - Departures " + fifteen_stars))
+    print(bar_mvg_colored + "\n")
+
 
 def display_departures(station_name, limit=20):
     departuresJSON = get_departures_by_name(station_name)
@@ -66,14 +72,24 @@ def display_departures(station_name, limit=20):
     print( color(table.draw(), fore=MVG_FG, back=MVG_BG) )
     
 
-path = os.path.dirname(os.path.abspath(__file__))
 
-if len(sys.argv) == 2:
-    display_departures(sys.argv[1])
-    recent = open(path + "/recent.txt", "w")
-    recent.write(sys.argv[1])
-elif len(sys.argv) == 1:
-    recent = open(path + "/recent.txt", "r")
-    display_departures(recent.read())
-else:
-    display_departures("Studentenstadt")
+if __name__ == "__main__":
+
+    import argparse
+
+    parser = argparse.ArgumentParser(prog="mvg")
+    parser.add_argument("--recent", "-r", action="store_true")
+    parser.add_argument("--departures", "-d")
+    args = parser.parse_args()
+
+    recents_file_path = os.path.join(os.getcwd(), "recent.txt")
+
+    if args.recent:
+        with open(recents_file_path, "r") as recent:
+            display_departures(recent.read())
+    elif args.departures:
+        display_departures(args.departures)
+        with open(recents_file_path, "w") as recent:
+            recent.write(args.departures)
+    else:
+        display_departures("Studentenstadt")
