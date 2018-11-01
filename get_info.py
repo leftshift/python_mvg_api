@@ -9,34 +9,29 @@ import os
 MVG_BG = "#2a4779"
 MVG_FG = "#ffffff"
 
+
 class Departure:
     
-    def __init__( self, obj ):
-        self.json = obj
+    def __init__( self, json ):
+        self.label = json["label"]
+        self.destination = json["destination"]
+        self.departure_time_minutes = json["departureTimeMinutes"]
+        self.line_background_color = json["lineBackgroundColor"]
 
-    def get_line(self):
-        label = color(self.json["label"], fore="#fff", back=self.json["lineBackgroundColor"])
+    def get_label_colored(self):
+        label = color(self.label, fore="#fff", back=self.line_background_color)
         return label
 
     def get_destination(self):
-        return self.json["destination"]
+        return self.destination
 
     def get_departure_time_min(self):
-        return self.json["departureTimeMinutes"]
-
-    def get(self, *attributes ):
-        row = []
-        for attr in attributes:
-            if attr == "label":
-                row.append( self.get_line() )
-            else:
-                row.append( self.json[attr] )
-        return row
+        return self.departure_time_minutes
     
     def __str__(self):
-        label = self.get_line()
+        label = self.get_label_colored()
         direction = self.get_destination()
-        departure_min = self.json["departureTimeMinutes"]
+        departure_min = self.departure_time_minutes
 
         return label + "\t" + direction + "\t" + str(departure_min)
         
@@ -67,7 +62,7 @@ def display_departures(station_name, limit=20):
     rows = []
     rows.append(['\x1b[38;5;231m\x1b[48;5;23mline\x1b[0m', 'destination', 'departure (min)'])
     for dep in departures:
-        rows.append( dep.get("label", "destination", "departureTimeMinutes") )
+        rows.append( [dep.get_label_colored(), dep.destination, dep.departure_time_minutes] )
     table.add_rows(rows)
     print( color(table.draw(), fore=MVG_FG, back=MVG_BG) )
     
