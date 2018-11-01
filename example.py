@@ -2,8 +2,7 @@
 
 from mvg_api import *
 
-obersendling = Station("Obersendling")
-departures = obersendling.get_departures()
+departures = get_departures_by_name("Obersendling")
 
 for departure in departures:
     print(departure['product'] + departure['label'] + "\t" + departure['destination'] + "\t" + str(departure['departureTimeMinutes']))
