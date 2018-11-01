@@ -43,12 +43,13 @@ class Departure:
 
 def display_title_bar():
     # os.system('clear')
-    print(color("****************************", fore=MVG_FG, back=MVG_BG))
-    print(color("***** MVG - Departures *****", fore=MVG_FG, back=MVG_BG) )
-    print(color("****************************", fore=MVG_FG, back=MVG_BG) + "\n")
+    print(color("************************************************", fore=MVG_FG, back=MVG_BG))
+    print(color("*************** MVG - Departures ***************", fore=MVG_FG, back=MVG_BG) )
+    print(color("************************************************", fore=MVG_FG, back=MVG_BG) + '\n')
 
-def display_departures(station_name):
+def display_departures(station_name, limit=5):
     departuresJSON = get_departures_by_name(station_name)
+    departuresJSON = departuresJSON[:limit]
 
     departures = [ Departure(i) for i in departuresJSON ]
     
@@ -58,15 +59,20 @@ def display_departures(station_name):
     table.set_cols_align( ['c', 'l', 'c'] )
     
     rows = []
-    rows.append(['\x1b[38;5;231m\x1b[48;5;23mline\x1b[0m', 'destination', 'departureTime (min)'])
+    rows.append(['\x1b[38;5;231m\x1b[48;5;23mline\x1b[0m', 'destination', 'departure (min)'])
     for dep in departures:
         rows.append( dep.get("label", "destination", "departureTimeMinutes") )
     table.add_rows(rows)
-    print( table.draw() )
+    print( color(table.draw(), fore=MVG_FG, back=MVG_BG) )
+    
 
 
-if len(sys.argv) == 1:
-    print(sys.argv)
-
-display_title_bar()
-display_departures("Studentenstadt")
+if len(sys.argv) == 2:
+    display_departures(sys.argv[1])
+    recent = open("recent.txt", "w")
+    recent.write(sys.argv[1])
+elif len(sys.argv) == 1:
+    recent = open("recent.txt", "r")
+    display_departures(recent.read())
+else:
+    display_departures("Studentenstadt")
