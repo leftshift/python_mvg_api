@@ -72,14 +72,16 @@ def display_departures(station_name, limit=20):
     print( color(table.draw(), fore=MVG_FG, back=MVG_BG) )
     
 
-path = os.path.dirname(os.path.abspath(__file__))
 
-if len(sys.argv) == 2:
-    display_departures(sys.argv[1])
-    recent = open(path + "/recent.txt", "w")
-    recent.write(sys.argv[1])
-elif len(sys.argv) == 1:
-    recent = open(path + "/recent.txt", "r")
-    display_departures(recent.read())
-else:
-    display_departures("Studentenstadt")
+if __name__ == "__main__":
+    path = os.path.dirname(os.path.abspath(__file__))
+
+    if len(sys.argv) == 2:
+        display_departures(sys.argv[1])
+        recent = open(path + "/recent.txt", "w")
+        recent.write(sys.argv[1])
+    elif len(sys.argv) == 1:
+        recent = open(path + "/recent.txt", "r")
+        display_departures(recent.read())
+    else:
+        display_departures("Studentenstadt")
