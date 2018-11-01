@@ -74,7 +74,7 @@ def display_departures(station_name, limit=20):
 
 
 if __name__ == "__main__":
-    cwd = os.path.dirname(os.path.abspath(__file__))
+    cwd = os.getcwd()
 
     if len(sys.argv) == 2:
         display_departures(sys.argv[1])
