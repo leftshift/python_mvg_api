@@ -19,18 +19,11 @@ class Departure:
         self.line_background_color = json["lineBackgroundColor"]
 
     def get_label_colored(self):
-        label = color(self.label, fore="#fff", back=self.line_background_color)
-        return label
-
-    def get_destination(self):
-        return self.destination
-
-    def get_departure_time_min(self):
-        return self.departure_time_minutes
+        return color(self.label, fore="#fff", back=self.line_background_color)
     
     def __str__(self):
         label = self.get_label_colored()
-        direction = self.get_destination()
+        direction = self.destination
         departure_min = self.departure_time_minutes
 
         return label + "\t" + direction + "\t" + str(departure_min)
