@@ -281,30 +281,3 @@ def get_departures(station_id):
 def get_interruptions():
     interruptions = _perform_api_request(interruptions_url)
     return interruptions
-
-
-class Station:
-    """Gives you a proxy to get the next departures for a particular
-    station.
-
-    Either give it an exact station name (like "Hauptbahnhof")
-    or a station_id.
-
-    Deprecated-ish: This is not really all that useful.
-    Just using :func:`get_id_for_station` and :func:`get_departures`
-    really is the nicer way in most cases.
-    """
-
-    def __init__(self, station):
-        matching_stations = get_stations(station)
-        if matching_stations == []:
-            raise NameError("No matching station found")
-        else:
-            self.id = matching_stations[0]["id"]
-            self.name = matching_stations[0]["name"]
-
-    def get_departures(self):
-        return get_departures(self.id)
-
-    def __repr__(self):
-        return "Station(id=%s, name='%s')" % (self.id, self.name)
