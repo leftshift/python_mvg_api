@@ -44,11 +44,11 @@ class Departure:
 def display_title_bar():
     # os.system('clear')
     color_it_mvg = lambda x: color(x, fore=MVG_FG, back=MVG_BG)
-    bar = color_it_mvg("*" * 48)
+    bar_mvg_colored = color_it_mvg("*" * 48)
     fifteen_stars = "*" * 15
-    print(bar)
+    print(bar_mvg_colored)
     print(color_it_mvg(fifteen_stars + " MVG - Departures " + fifteen_stars))
-    print(bar + "\n")
+    print(bar_mvg_colored + "\n")
 
 def display_departures(station_name, limit=20):
     departuresJSON = get_departures_by_name(station_name)
