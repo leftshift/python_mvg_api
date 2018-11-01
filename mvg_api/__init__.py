@@ -181,7 +181,6 @@ def get_route(start, dest,
     max_walk_time_to_start, max_walk_time_to_dest : int, optional
         Maximum time of walking in minutes required to reach the start/dest.
     """
-    url = routing_url
     options = []
 
     if isinstance(start, int):
