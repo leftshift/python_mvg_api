@@ -164,7 +164,7 @@ def get_stations(station):
 
 
 def get_route(start, dest,
-              time=None, arrival_time=False,
+              time=None, time_is_arrival_time=False,
               max_walk_time_to_start=None, max_walk_time_to_dest=None):
     """Plans a route from start to dest
 
@@ -175,7 +175,7 @@ def get_route(start, dest,
     dest : int/tuple
         `station_id` of the destination station or a tuple of coordinates
     time : datetime, optional
-    arrival_time : bool, optional
+    time_is_arrival_time : bool, optional
         Specifies if `time` is the starting time (which is default) or
         the desired time of arrival.
     max_walk_time_to_start, max_walk_time_to_dest : int, optional
@@ -205,7 +205,7 @@ def get_route(start, dest,
         if isinstance(time, datetime.datetime):
             time = _convert_time(time)
         options.append("time=" + str(time))
-        if arrival_time:
+        if time_is_arrival_time:
             options.append("arrival=true")
     if max_walk_time_to_start:
         options.append("maxTravelTimeFootwayToStation=" +
