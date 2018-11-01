@@ -99,11 +99,15 @@ def get_id_for_station(station_name):
     If more than one station match, the first result is given.
     `None` is returned if no match was found.
     """
-    try:
-        station = get_stations(station_name)[0]
-    except IndexError:
+
+    stations = get_stations(station_name)
+
+    # No station found
+    if not stations:
         return None
-    return station['id']
+    # At least one station found: Return first
+    else:
+        return stations[0]['id']
 
 
 def get_locations(query):
