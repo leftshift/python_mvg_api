@@ -75,14 +75,21 @@ def display_departures(station_name, limit=20):
 
 if __name__ == "__main__":
 
+    import argparse
+
+    parser = argparse.ArgumentParser(prog="mvg")
+    parser.add_argument("--recent", "-r", action="store_true")
+    parser.add_argument("--departures", "-d")
+    args = parser.parse_args()
+
     recents_file_path = os.path.join(os.getcwd(), "recent.txt")
 
-    if len(sys.argv) == 2:
-        display_departures(sys.argv[1])
-        with open(recents_file_path, "w") as recent:
-            recent.write(sys.argv[1])
-    elif len(sys.argv) == 1:
+    if args.recent:
         with open(recents_file_path, "r") as recent:
             display_departures(recent.read())
+    elif args.departures:
+        display_departures(args.departures)
+        with open(recents_file_path, "w") as recent:
+            recent.write(args.departures)
     else:
         display_departures("Studentenstadt")
