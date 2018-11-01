@@ -74,14 +74,14 @@ def display_departures(station_name, limit=20):
 
 
 if __name__ == "__main__":
-    path = os.path.dirname(os.path.abspath(__file__))
+    cwd = os.path.dirname(os.path.abspath(__file__))
 
     if len(sys.argv) == 2:
         display_departures(sys.argv[1])
-        recent = open(path + "/recent.txt", "w")
+        recent = open(cwd + "/recent.txt", "w")
         recent.write(sys.argv[1])
     elif len(sys.argv) == 1:
-        recent = open(path + "/recent.txt", "r")
+        recent = open(cwd + "/recent.txt", "r")
         display_departures(recent.read())
     else:
         display_departures("Studentenstadt")
