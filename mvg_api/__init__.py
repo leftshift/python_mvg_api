@@ -223,7 +223,9 @@ def get_route(start, dest,
         connection["arrival_datetime"] = _convert_time(connection["arrival"])
     return results["connectionList"]
 
+
 def get_departures_by_name(station_name):
+    """ Get the departures for a station, specified by its name. """
     
     station_id = get_id_for_station(station_name)
 
