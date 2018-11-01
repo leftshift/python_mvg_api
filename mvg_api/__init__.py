@@ -264,20 +264,22 @@ def get_departures(station_id):
         raise TypeError("Please give the int station_id of the station.\
                          You can find it out by running \
                          get_id_for_station('Station name')")
+
     url = departure_url.format(id=str(station_id))
     departures = _perform_api_request(url)['departures']
+
     for departure in departures:
         # For some reason, mvg gives you a Unix timestamp, but in milliseconds.
         # Here, we convert it to datetime
         time = _convert_time(departure['departureTime'])
         relative_time = time - datetime.datetime.now()
         departure[u'departureTimeMinutes'] = relative_time.seconds // 60
+
     return departures
 
 
 def get_interruptions():
-    url = interruptions_url
-    interruptions = _perform_api_request(url)
+    interruptions = _perform_api_request(interruptions_url)
     return interruptions
 
 
