@@ -66,8 +66,9 @@ if __name__ == "__main__":
     import argparse
 
     parser = argparse.ArgumentParser(prog="mvg")
-    parser.add_argument("--recent", "-r", action="store_true")
-    parser.add_argument("--departures", "-d")
+    args_group = parser.add_mutually_exclusive_group()
+    args_group.add_argument("--recent", "-r", action="store_true")
+    args_group.add_argument("--departures", "-d")
     args = parser.parse_args()
 
     recents_file_path = os.path.join(os.getcwd(), "recent.txt")
