@@ -99,11 +99,15 @@ def get_id_for_station(station_name):
     If more than one station match, the first result is given.
     `None` is returned if no match was found.
     """
-    try:
-        station = get_stations(station_name)[0]
-    except IndexError:
+
+    stations = get_stations(station_name)
+
+    # No station found
+    if not stations:
         return None
-    return station['id']
+    # At least one station found: Return first
+    else:
+        return stations[0]['id']
 
 
 def get_locations(query):
@@ -155,15 +159,12 @@ def get_stations(station):
     are not stations.
     """
     results = get_locations(station)
-    stations = []
-    for result in results:
-        if result['type'] == 'station':
-            stations.append(result)
+    stations = [result for result in results if result['type'] == 'station']
     return stations
 
 
 def get_route(start, dest,
-              time=None, arrival_time=False,
+              time=None, time_is_arrival_time=False,
               max_walk_time_to_start=None, max_walk_time_to_dest=None):
     """Plans a route from start to dest
 
@@ -174,13 +175,12 @@ def get_route(start, dest,
     dest : int/tuple
         `station_id` of the destination station or a tuple of coordinates
     time : datetime, optional
-    arrival_time : bool, optional
+    time_is_arrival_time : bool, optional
         Specifies if `time` is the starting time (which is default) or
         the desired time of arrival.
     max_walk_time_to_start, max_walk_time_to_dest : int, optional
         Maximum time of walking in minutes required to reach the start/dest.
     """
-    url = routing_url
     options = []
 
     if isinstance(start, int):
@@ -205,7 +205,7 @@ def get_route(start, dest,
         if isinstance(time, datetime.datetime):
             time = _convert_time(time)
         options.append("time=" + str(time))
-        if arrival_time:
+        if time_is_arrival_time:
             options.append("arrival=true")
     if max_walk_time_to_start:
         options.append("maxTravelTimeFootwayToStation=" +
@@ -223,7 +223,9 @@ def get_route(start, dest,
         connection["arrival_datetime"] = _convert_time(connection["arrival"])
     return results["connectionList"]
 
+
 def get_departures_by_name(station_name):
+    """ Get the departures for a station, specified by its name. """
     
     station_id = get_id_for_station(station_name)
 
@@ -262,45 +264,20 @@ def get_departures(station_id):
         raise TypeError("Please give the int station_id of the station.\
                          You can find it out by running \
                          get_id_for_station('Station name')")
+
     url = departure_url.format(id=str(station_id))
     departures = _perform_api_request(url)['departures']
+
     for departure in departures:
         # For some reason, mvg gives you a Unix timestamp, but in milliseconds.
         # Here, we convert it to datetime
         time = _convert_time(departure['departureTime'])
         relative_time = time - datetime.datetime.now()
         departure[u'departureTimeMinutes'] = relative_time.seconds // 60
+
     return departures
 
 
 def get_interruptions():
-    url = interruptions_url
-    interruptions = _perform_api_request(url)
+    interruptions = _perform_api_request(interruptions_url)
     return interruptions
-
-
-class Station:
-    """Gives you a proxy to get the next departures for a particular
-    station.
-
-    Either give it an exact station name (like "Hauptbahnhof")
-    or a station_id.
-
-    Deprecated-ish: This is not really all that useful.
-    Just using :func:`get_id_for_station` and :func:`get_departures`
-    really is the nicer way in most cases.
-    """
-
-    def __init__(self, station):
-        matching_stations = get_stations(station)
-        if matching_stations == []:
-            raise NameError("No matching station found")
-        else:
-            self.id = matching_stations[0]["id"]
-            self.name = matching_stations[0]["name"]
-
-    def get_departures(self):
-        return get_departures(self.id)
-
-    def __repr__(self):
-        return "Station(id=%s, name='%s')" % (self.id, self.name)
