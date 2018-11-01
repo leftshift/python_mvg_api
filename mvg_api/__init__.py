@@ -17,8 +17,9 @@ INTERRUPTIONS_URL = BASE_URL + ".rest/betriebsaenderungen/api/interruptions"
 
 
 def _perform_api_request(url):
-    resp = requests.get(url, headers={'X-MVG-Authorization-Key': API_KEY})
-    return resp.json()
+    """ Request the given URL and return a JSON with the response. """
+    response = requests.get(url, headers={'X-MVG-Authorization-Key': API_KEY})
+    return response.json()
 
 
 def _convert_time(time):
