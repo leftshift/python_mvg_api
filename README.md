@@ -22,5 +22,9 @@ Then add an alias to your shell, for example for ZSH add the following line to y
 ## Usage
 `mvg --help` will list possible commands.
 
+`mvg -d Studentenstadt` gets all departures from Studentenstadt
+
+`mvg` gets all departures from last used station
+
 ## Demo
 ![screenshot](demo.png)

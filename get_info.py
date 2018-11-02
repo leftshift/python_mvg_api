@@ -83,4 +83,6 @@ if __name__ == "__main__":
         with open(recents_file_path, "w") as recent:
             recent.write(args.departures)
     else:
-        display_departures("Studentenstadt")
+        with open(recents_file_path, "r") as recent:
+            display_departures(recent.read())
+
