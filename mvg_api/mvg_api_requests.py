@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# coding=utf-8
 """ Interface to the MVG API. """
 
 import requests
