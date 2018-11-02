@@ -1,3 +1,5 @@
+# coding=utf-8
+
 from mvg_api.mvg_api_requests import *
 
 from colr import color
