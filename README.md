@@ -1,6 +1,6 @@
 # A console program to request the departure time from the MVG
 
-The python program is based on the library by [leftshift](https://github.com/leftshift/python_mvg_api). Check out his work for more info on the API.
+This python script is based on the work of [leftshift](https://github.com/leftshift/python_mvg_api). Check out his work for more info on the API.
 
 ## Getting started
 
