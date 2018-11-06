@@ -43,7 +43,7 @@ def display_title_bar():
     print(bar_mvg_colored + "\n")
 
 
-def display_departures(station_name, limit=20):
+def display_departures(station_name, limit=10):
     departuresJSON = get_departures_by_name(station_name)
     departuresJSON = departuresJSON[:limit]
 
@@ -68,9 +68,11 @@ if __name__ == "__main__":
     import argparse
 
     parser = argparse.ArgumentParser(prog="mvg")
-    args_group = parser.add_mutually_exclusive_group()
+    #args_group = parser.add_mutually_exclusive_group()
+    args_group = parser
     args_group.add_argument("--recent", "-r", action="store_true")
-    args_group.add_argument("--departures", "-d")
+    args_group.add_argument("--departures", "-d", help="Departure Station/Stop")
+    args_group.add_argument("--limit", "-l", help="# results to fetch")
     args = parser.parse_args()
 
     recents_file_path = os.path.join(os.getcwd(), "recent.txt")
@@ -79,7 +81,11 @@ if __name__ == "__main__":
         with open(recents_file_path, "r") as recent:
             display_departures(recent.read())
     elif args.departures:
-        display_departures(args.departures)
+        #print(args.limit)
+        if args.limit:
+            display_departures(args.departures, int(args.limit))
+        else:
+            display_departures(args.departures)
         with open(recents_file_path, "w") as recent:
             recent.write(args.departures)
     else:
