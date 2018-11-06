@@ -20,7 +20,7 @@ Then add an alias to your shell, for example for ZSH add the following line to y
 `alias mvg="python3 $HOME/path/to/directory/python_mvg_console_program/get_info.py"`
 
 ## Usage
-<code>
+<pre><code>
   usage: mvg [-h] [--recent] [--departures DEPARTURES] [--limit LIMIT]
 
   arguments:
@@ -29,7 +29,7 @@ Then add an alias to your shell, for example for ZSH add the following line to y
   --departures DEPARTURES, -d DEPARTURES Departure Station/Stop
   --limit LIMIT, -l LIMIT # results to fetch
 
-</code>
+</code></pre>
 
 ## Demo
 ![screenshot](demo.png)
