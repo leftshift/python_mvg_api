@@ -70,7 +70,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(prog="mvg")
     #args_group = parser.add_mutually_exclusive_group()
     args_group = parser
-    args_group.add_argument("--recent", "-r", action="store_true")
+    args_group.add_argument("--recent", "-r", action="store_true", help="fetch the most recent search.")
     args_group.add_argument("--departures", "-d", help="Departure Station/Stop")
     args_group.add_argument("--limit", "-l", help="# results to fetch")
     args = parser.parse_args()
