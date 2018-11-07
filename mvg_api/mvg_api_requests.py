@@ -6,6 +6,7 @@ import requests
 import json
 import datetime
 from time import mktime
+from pprint import pprint
 
 API_KEY = "5af1beca494712ed38d313714d4caff6"
 BASE_URL = "https://www.mvg.de/"
@@ -97,6 +98,20 @@ def get_nearby_stations(lat, lon):
     results = _perform_api_request(url)
     return results['locations']
 
+def get_station_name(name_like):
+    """Returns the station_name for the given name_like.
+
+    If more than one station match, the first result is given.
+    `None` is returned if no match was found.
+    """
+    stations = get_stations(name_like)
+
+    # No station found
+    if not stations:
+        return None
+    # At least one station found: Return first
+    else:
+        return stations[0]['name']
 
 def get_id_for_station(station_name):
     """Returns the station_id for the given station name.
@@ -112,6 +127,7 @@ def get_id_for_station(station_name):
         return None
     # At least one station found: Return first
     else:
+        #pprint(stations)
         return stations[0]['id']
 
 
