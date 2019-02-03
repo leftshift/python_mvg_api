@@ -289,6 +289,8 @@ class Station:
         else:
             self.id = matching_stations[0]["id"]
             self.name = matching_stations[0]["name"]
+            self.latitude = matching_stations[0]["latitude"]
+            self.longitude = matching_stations[0]["longitude"]
 
     def get_departures(self):
         return get_departures(self.id)
