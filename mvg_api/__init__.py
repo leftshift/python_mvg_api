@@ -215,7 +215,7 @@ def get_route(start, dest,
         options.append("maxTravelTimeFootwayToDestination=" +
                        str(max_walk_time_to_dest))
 
-    if not change_limit is None: # 'if change_limit:' would not work for 0
+    if change_limit is not None: # 'if change_limit:' would not work for 0
         if isinstance(change_limit, int):
             options.append("changeLimit=" + str(change_limit))
 
