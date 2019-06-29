@@ -164,7 +164,8 @@ def get_stations(station):
 
 def get_route(start, dest,
               time=None, arrival_time=False,
-              max_walk_time_to_start=None, max_walk_time_to_dest=None):
+              max_walk_time_to_start=None, max_walk_time_to_dest=None,
+              change_limit=None):
     """Plans a route from start to dest
 
     Parameters
@@ -213,6 +214,10 @@ def get_route(start, dest,
     if max_walk_time_to_dest:
         options.append("maxTravelTimeFootwayToDestination=" +
                        str(max_walk_time_to_dest))
+
+    if change_limit is not None: # 'if change_limit:' would not work for 0
+        if isinstance(change_limit, int):
+            options.append("changeLimit=" + str(change_limit))
 
     options_url = "&".join(options)
     url = routing_url + options_url
