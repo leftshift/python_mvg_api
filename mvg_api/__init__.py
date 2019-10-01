@@ -15,7 +15,7 @@ interruptions_url = "https://www.mvg.de/.rest/betriebsaenderungen/api/interrupti
 
 
 def _perform_api_request(url):
-    resp = requests.get(url, headers={'X-MVG-Authorization-Key': api_key})
+    resp = requests.get(url, headers={'X-MVG-Authorization-Key': api_key, 'User-Agent': 'python-mvg-api/1 (+https://github.com/leftshift/python_mvg_api)', 'Accept': 'application/json'})
     return resp.json()
 
 
