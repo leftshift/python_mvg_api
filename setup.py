@@ -23,6 +23,7 @@ setup(
     version='1.2.0',
     description='Library for fetching departure and route data from the Munich public transport organisation MVG',
     long_description=long_description,
+    long_description_content_type='text/markdown',
     url='https://github.com/leftshift/python_mvg_api',
 
     author='leftshift',
