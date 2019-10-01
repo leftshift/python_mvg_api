@@ -15,7 +15,7 @@ interruptions_url = "https://www.mvg.de/.rest/betriebsaenderungen/api/interrupti
 
 
 def _perform_api_request(url):
-    resp = requests.get(url, headers={'X-MVG-Authorization-Key': api_key})
+    resp = requests.get(url, headers={'X-MVG-Authorization-Key': api_key, 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36', 'Accept': 'application/json, text/javascript, */*; q=0.01', 'Referer': 'https://www.mvg.de/dienste/abfahrtszeiten.html', 'Sec-Fetch-Mode': 'cors', 'X-Requested-With': 'XMLHttpRequest'})
     return resp.json()
 
 
