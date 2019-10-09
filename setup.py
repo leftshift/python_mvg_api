@@ -20,7 +20,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='mvg_api',
-    version='1.2.0',
+    version='1.2.1',
     description='Library for fetching departure and route data from the Munich public transport organisation MVG',
     long_description=long_description,
     long_description_content_type='text/markdown',
