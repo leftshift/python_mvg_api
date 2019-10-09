@@ -6,11 +6,11 @@ import datetime
 from time import mktime
 
 api_key = "5af1beca494712ed38d313714d4caff6"
-query_url_name = "https://www.mvg.de/fahrinfo/api/location/queryWeb?q={name}" #for station names
-query_url_id = "https://www.mvg.de/fahrinfo/api/location/query?q={id}" #for station ids
-departure_url = "https://www.mvg.de/fahrinfo/api/departure/{id}?footway=0"
-nearby_url = "https://www.mvg.de/fahrinfo/api/location/nearby?latitude={lat}&longitude={lon}"
-routing_url = "https://www.mvg.de/fahrinfo/api/routing/?"
+query_url_name = "https://www.mvg.de/api/fahrinfo/location/queryWeb?q={name}" #for station names
+query_url_id = "https://www.mvg.de/api/fahrinfo/location/query?q={id}" #for station ids
+departure_url = "https://www.mvg.de/api/fahrinfo/departure/{id}?footway=0"
+nearby_url = "https://www.mvg.de/api/fahrinfo/location/nearby?latitude={lat}&longitude={lon}"
+routing_url = "https://www.mvg.de/api/fahrinfo/routing/?"
 interruptions_url = "https://www.mvg.de/.rest/betriebsaenderungen/api/interruptions"
 
 
