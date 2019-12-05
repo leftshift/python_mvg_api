@@ -11,6 +11,26 @@ departure_url = "https://www.mvg.de/api/fahrinfo/departure/{id}?footway=0"
 nearby_url = "https://www.mvg.de/api/fahrinfo/location/nearby?latitude={lat}&longitude={lon}"
 routing_url = "https://www.mvg.de/api/fahrinfo/routing/?"
 interruptions_url = "https://www.mvg.de/.rest/betriebsaenderungen/api/interruptions"
+id_prefix = "de:09162:"
+
+def _convert_id(old_id: int) -> str:
+    return id_prefix + str(old_id)
+
+def _station_sanity_check(id:str):
+    """
+    New ID format has these specifications:
+    starts with de
+    has two : (checked with split)
+    second and third field is integer (not checked)
+    :param id: station id to be checked
+    :return: Boolean on id sanity
+    """
+    split_id = id.split(":")
+    if not len(split_id)==3:
+        return False
+    if not split_id[0]=='de':
+        return False
+    return True
 
 
 def _perform_api_request(url):
@@ -63,7 +83,7 @@ def get_nearby_stations(lat, lon):
                 'type': 'station',
                 'latitude': 48.12046,
                 'longitude': 11.61869,
-                'id': 1060,
+                'id': 'de:09162:1060',
                 'place': 'München',
                 'name': 'Innsbrucker Ring',
                 'hasLiveData': True,
@@ -121,7 +141,7 @@ def get_locations(query):
                 'type': 'station',
                 'latitude': 48.12046,
                 'longitude': 11.61869,
-                'id': 1060,
+                'id': 'de:09162:1060',
                 'place': 'München',
                 'name': 'Innsbrucker Ring',
                 'hasLiveData': True,
@@ -171,11 +191,15 @@ def get_route(start, dest,
               change_limit=None):
     """Plans a route from start to dest
 
+    Change in 1.3.1: accepts both 'old-style' integer IDs which were used
+    by the API before this version and the new string IDs which
+    look like `de:09162:6`.
+
     Parameters
     ----------
-    start : int/tuple
+    start : int/str/tuple
         The `station_id` of the starting station or a tuple of coordinates
-    dest : int/tuple
+    dest : int/str/tuple
         `station_id` of the destination station or a tuple of coordinates
     time : datetime, optional
     arrival_time : bool, optional
@@ -189,20 +213,27 @@ def get_route(start, dest,
     url = routing_url
     options = []
 
-    if isinstance(start, int):
-        options.append("fromStation=" + str(start))
-    elif isinstance(start, tuple) and len(start) == 2:
+
+    if isinstance(start, tuple) and len(start) == 2:
         options.append("fromLatitude=" + str(start[0]))
         options.append("fromLongitude=" + str(start[1]))
+    elif isinstance(start, int):
+        options.append("fromStation=" + _convert_id(start))
+    elif _station_sanity_check(start):
+        options.append("fromStation=" + start)
     else:
         raise ValueError("A start must be given;\
-                          either int station id or tuple latitude longitude")
+                          either int station id, 'new style' string ids \
+                          or a tuple with latitude and longitude")
 
-    if isinstance(dest, int):
-        options.append("toStation=" + str(dest))
-    elif isinstance(dest, tuple) and len(dest) == 2:
+
+    if isinstance(dest, tuple) and len(dest) == 2:
         options.append("toLatitude=" + str(dest[0]))
         options.append("toLongitude=" + str(dest[1]))
+    elif isinstance(dest, int):
+        options.append("toStation=" + _convert_id(dest))
+    elif _station_sanity_check(dest):
+        options.append("toStation=" + dest)
     else:
         raise ValueError("A destination must be given;\
                           either int station id or tuple latitude longitude")
@@ -237,6 +268,10 @@ def get_route(start, dest,
 def get_departures(station_id):
     """Get the next departures for `station_id`.
 
+    Change in 1.3.1: accepts both 'old-style' integer IDs which were used
+    by the API before this version and the new string IDs which
+    look like `de:09162:6`.
+
     To get the `station_id` associated with a station name,
     use :func:`get_id_for_station`.
 
@@ -259,11 +294,13 @@ def get_departures(station_id):
     `departureTimeMinutes`, the time left to the departure in minutes,
     is added to the response from the api for your convenience.
     """
-    if not isinstance(station_id, int):
+    if isinstance(station_id, int):
+        station_id = _convert_id(station_id)
+    elif not _station_sanity_check(station_id):
         raise TypeError("Please give the int station_id of the station.\
                          You can find it out by running \
                          get_id_for_station('Station name')")
-    url = departure_url.format(id=str(station_id))
+    url = departure_url.format(id=station_id)
     departures = _perform_api_request(url)['departures']
     for departure in departures:
         # For some reason, mvg gives you a Unix timestamp, but in milliseconds.
