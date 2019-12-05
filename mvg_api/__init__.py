@@ -12,6 +12,10 @@ departure_url = "https://www.mvg.de/api/fahrinfo/departure/{id}?footway=0"
 nearby_url = "https://www.mvg.de/api/fahrinfo/location/nearby?latitude={lat}&longitude={lon}"
 routing_url = "https://www.mvg.de/api/fahrinfo/routing/?"
 interruptions_url = "https://www.mvg.de/.rest/betriebsaenderungen/api/interruptions"
+id_prefix = "de:09162:"
+
+def _convert_id(old_id: int) -> str:
+    return id_prefix + str(old_id)
 
 def _station_sanity_check(id:str):
     """
@@ -206,16 +210,21 @@ def get_route(start, dest,
     if isinstance(start, tuple) and len(start) == 2:
         options.append("fromLatitude=" + str(start[0]))
         options.append("fromLongitude=" + str(start[1]))
+    elif isinstance(start, int):
+        options.append("fromStation=" + _convert_id(start))
     elif _station_sanity_check(start):
         options.append("fromStation=" + start)
     else:
         raise ValueError("A start must be given;\
-                          either int station id or tuple latitude longitude")
+                          either int station id, 'new style' string ids \
+                          or a tuple with latitude and longitude")
 
 
     if isinstance(dest, tuple) and len(dest) == 2:
         options.append("toLatitude=" + str(dest[0]))
         options.append("toLongitude=" + str(dest[1]))
+    elif isinstance(dest, int):
+        options.append("toStation=" + _convert_id(dest))
     elif _station_sanity_check(dest):
         options.append("toStation=" + dest)
     else:
@@ -274,7 +283,9 @@ def get_departures(station_id):
     `departureTimeMinutes`, the time left to the departure in minutes,
     is added to the response from the api for your convenience.
     """
-    if not _station_sanity_check(station_id):
+    if isinstance(station_id, int):
+        station_id = _convert_id(station_id)
+    elif not _station_sanity_check(station_id):
         raise TypeError("Please give the int station_id of the station.\
                          You can find it out by running \
                          get_id_for_station('Station name')")
