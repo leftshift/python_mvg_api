@@ -191,7 +191,7 @@ def get_route(start, dest,
               change_limit=None):
     """Plans a route from start to dest
 
-    Change in 1.3.1: accepts both 'old-style' integer IDs which were used
+    Change in 1.3.2: accepts both 'old-style' integer IDs which were used
     by the API before this version and the new string IDs which
     look like `de:09162:6`.
 
@@ -268,7 +268,7 @@ def get_route(start, dest,
 def get_departures(station_id):
     """Get the next departures for `station_id`.
 
-    Change in 1.3.1: accepts both 'old-style' integer IDs which were used
+    Change in 1.3.2: accepts both 'old-style' integer IDs which were used
     by the API before this version and the new string IDs which
     look like `de:09162:6`.
 
