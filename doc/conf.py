@@ -20,7 +20,7 @@
 import os
 import sys
 sys.path.insert(0, os.path.abspath('..'))
-print sys.path
+print(sys.path)
 
 import mvg_api
 
@@ -154,8 +154,8 @@ html_theme = 'alabaster'
 # html_logo = None
 
 # The name of an image file (relative to this directory) to use as a favicon of
-# the docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
-# pixels large.
+# the docs.  This file should be a Windows icon file (.ico) being 16x16 or
+# 32x32 pixels large.
 #
 # html_favicon = None
 
@@ -268,7 +268,8 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'python_mvg_api.tex', 'python\\_mvg\\_departures Documentation',
+    (master_doc, 'python_mvg_api.tex',
+     'python\\_mvg\\_departures Documentation',
      'Adrian', 'manual'),
 ]
 

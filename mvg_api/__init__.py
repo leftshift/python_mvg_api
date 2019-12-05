@@ -1,13 +1,12 @@
 # coding=utf-8
 
 import requests
-import json
 import datetime
 from time import mktime
 
 api_key = "5af1beca494712ed38d313714d4caff6"
-query_url_name = "https://www.mvg.de/api/fahrinfo/location/queryWeb?q={name}" #for station names
-query_url_id = "https://www.mvg.de/api/fahrinfo/location/query?q={id}" #for station ids
+query_url_name = "https://www.mvg.de/api/fahrinfo/location/queryWeb?q={name}"  # for station names
+query_url_id = "https://www.mvg.de/api/fahrinfo/location/query?q={id}"  # for station ids
 departure_url = "https://www.mvg.de/api/fahrinfo/departure/{id}?footway=0"
 nearby_url = "https://www.mvg.de/api/fahrinfo/location/nearby?latitude={lat}&longitude={lon}"
 routing_url = "https://www.mvg.de/api/fahrinfo/routing/?"
@@ -15,7 +14,14 @@ interruptions_url = "https://www.mvg.de/.rest/betriebsaenderungen/api/interrupti
 
 
 def _perform_api_request(url):
-    resp = requests.get(url, headers={'X-MVG-Authorization-Key': api_key, 'User-Agent': 'python-mvg-api/1 (+https://github.com/leftshift/python_mvg_api)', 'Accept': 'application/json'})
+    resp = requests.get(
+            url,
+            headers={
+                'X-MVG-Authorization-Key': api_key,
+                'User-Agent': 'python-mvg-api/1 (+https://github.com/leftshift/python_mvg_api)',
+                'Accept': 'application/json'
+                }
+            )
     return resp.json()
 
 
@@ -35,11 +41,8 @@ def _convert_time(time):
     if isinstance(time, datetime.datetime):
         return int(mktime(time.timetuple()))*1000
     else:
-        try:
-            timestamp = time / 1000
-            return datetime.datetime.fromtimestamp(timestamp)
-        except Exception as e:
-            raise
+        timestamp = time / 1000
+        return datetime.datetime.fromtimestamp(timestamp)
 
 
 def get_nearby_stations(lat, lon):
@@ -140,7 +143,7 @@ def get_locations(query):
 
     """
     try:
-        query = int(query)  # converts station ids to int if thay aren't already
+        query = int(query)  # converts station ids to int
     except(ValueError):  # happens if it is a station name
         url = query_url_name.format(name=query)
     else:  # happens if it is a station id
@@ -217,7 +220,7 @@ def get_route(start, dest,
         options.append("maxTravelTimeFootwayToDestination=" +
                        str(max_walk_time_to_dest))
 
-    if change_limit is not None: # 'if change_limit:' would not work for 0
+    if change_limit is not None:  # 'if change_limit:' would not work for 0
         if isinstance(change_limit, int):
             options.append("changeLimit=" + str(change_limit))
 
