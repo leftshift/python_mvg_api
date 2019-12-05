@@ -57,27 +57,27 @@ def get_nearby_stations(lat, lon):
 
         [
             {
-                'lines':
-                    {
-                    'nachtbus': [],
-                    'ubahn': ['2', '5', '7'],
-                    'tram': [],
-                    'sbahn': [],
-                    'otherlines': [],
-                    'nachttram': [],
-                    'bus': []
-                    },
-                'hasLiveData': True,
-                'place': 'München',
-                'products': ['BUS', 'TRAM', 'UBAHN', 'SBAHN'],
+                'type': 'station',
+                'latitude': 48.12046,
+                'longitude': 11.61869,
                 'id': 1060,
-                'type': 'nearbystation',
+                'place': 'München',
                 'name': 'Innsbrucker Ring',
+                'hasLiveData': True,
                 'hasZoomData': True,
-                'distance': 59,
-                'longitude': 11.619138,
-                'latitude': 48.120408
-             },
+                'products': ['UBAHN'],
+                'aliases': 'Muenchen Munchen',
+                'link': 'IR',
+                'lines': {
+                    'tram': [],
+                    'nachttram': [],
+                    'sbahn': [],
+                    'ubahn': [],
+                    'bus': [],
+                    'nachtbus': [],
+                    'otherlines': []
+                }
+            },
          ]
 
     """
@@ -115,26 +115,26 @@ def get_locations(query):
 
         [
             {
-                'lines':
-                    {
-                    'nachtbus': [],
-                    'ubahn': ['2', '5', '7'],
-                    'tram': [],
-                    'sbahn': [],
-                    'otherlines': [],
-                    'nachttram': [],
-                    'bus': []
-                    },
-                'hasLiveData': True,
-                'place': 'München',
-                'products': ['u'],
+                'type': 'station',
+                'latitude': 48.12046,
+                'longitude': 11.61869,
                 'id': 1060,
-                'type': 'nearbystation',
+                'place': 'München',
                 'name': 'Innsbrucker Ring',
+                'hasLiveData': True,
                 'hasZoomData': True,
-                'distance': 59,
-                'longitude': 11.619138,
-                'latitude': 48.120408
+                'products': ['UBAHN'],
+                'aliases': 'Muenchen Munchen',
+                'link': 'IR',
+                'lines': {
+                    'tram': [],
+                    'nachttram': [],
+                    'sbahn': [],
+                    'ubahn': [],
+                    'bus': [],
+                    'nachtbus': [],
+                    'otherlines': []
+                }
             },
         ]
 
@@ -180,6 +180,8 @@ def get_route(start, dest,
         the desired time of arrival.
     max_walk_time_to_start, max_walk_time_to_dest : int, optional
         Maximum time of walking in minutes required to reach the start/dest.
+    changeLimit : int, optional
+        Specifies the maximum amount of changes.
     """
     url = routing_url
     options = []
@@ -239,15 +241,15 @@ def get_departures(station_id):
 
         [
             {
-                'departureTimeMinutes': 0,
-                'destination': 'Laimer Platz',
-                'sev': False,
-                'departureId': 1188266868,
+                'departureTime': 1571923180000,
+                'product': 'UBAHN',
+                'label': 'U2',
+                'destination': 'Messestadt Ost',
                 'live': True,
-                'departureTime': 1478644495000,
-                'lineBackgroundColor': '#b78730',
-                'label': '5',
-                'product': 'u'
+                'lineBackgroundColor': '#dd3d4d',
+                'departureId': 1152101303,
+                'sev': False,
+                'departureTimeMinutes': 0
             },
         ]
 
