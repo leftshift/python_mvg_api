@@ -80,7 +80,7 @@ def get_nearby_stations(lat, lon):
                 'type': 'station',
                 'latitude': 48.12046,
                 'longitude': 11.61869,
-                'id': 1060,
+                'id': 'de:09162:1060',
                 'place': 'München',
                 'name': 'Innsbrucker Ring',
                 'hasLiveData': True,
@@ -138,7 +138,7 @@ def get_locations(query):
                 'type': 'station',
                 'latitude': 48.12046,
                 'longitude': 11.61869,
-                'id': 1060,
+                'id': 'de:09162:1060',
                 'place': 'München',
                 'name': 'Innsbrucker Ring',
                 'hasLiveData': True,
@@ -188,11 +188,15 @@ def get_route(start, dest,
               change_limit=None):
     """Plans a route from start to dest
 
+    Change in 1.3.1: accepts both 'old-style' integer IDs which were used
+    by the API before this version and the new string IDs which
+    look like `de:09162:6`.
+
     Parameters
     ----------
-    start : int/tuple
+    start : int/str/tuple
         The `station_id` of the starting station or a tuple of coordinates
-    dest : int/tuple
+    dest : int/str/tuple
         `station_id` of the destination station or a tuple of coordinates
     time : datetime, optional
     arrival_time : bool, optional
@@ -260,6 +264,10 @@ def get_route(start, dest,
 
 def get_departures(station_id):
     """Get the next departures for `station_id`.
+
+    Change in 1.3.1: accepts both 'old-style' integer IDs which were used
+    by the API before this version and the new string IDs which
+    look like `de:09162:6`.
 
     To get the `station_id` associated with a station name,
     use :func:`get_id_for_station`.
