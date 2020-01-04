@@ -13,8 +13,27 @@ routing_url = "https://www.mvg.de/api/fahrinfo/routing/?"
 interruptions_url = "https://www.mvg.de/.rest/betriebsaenderungen/api/interruptions"
 id_prefix = "de:09162:"
 
+
+class ApiError(Exception):
+    """
+    Some error was returned by the mvg api when handling the request.
+    :ivar code: status code returned by the API
+    :ivar reason: response given by the api (optional)
+    """
+    def __init__(self, code, reason):
+        self.code = code
+        self.reason = reason
+
+    def __str__(self):
+        out = f"Got status code {self.code}"
+        if self.reason:
+            out += f" with response {self.reason}"
+        return out
+
+
 def _convert_id(old_id: int) -> str:
     return id_prefix + str(old_id)
+
 
 def _station_sanity_check(id:str):
     """
@@ -42,6 +61,11 @@ def _perform_api_request(url):
                 'Accept': 'application/json'
                 }
             )
+    if not resp.ok:
+        try:
+            raise ApiError(resp.status_code, resp.json())
+        except ValueError:
+            raise ApiError(resp.status_code)
     return resp.json()
 
 
