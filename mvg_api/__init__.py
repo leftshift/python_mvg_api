@@ -335,7 +335,7 @@ def get_departures(station_id):
             delay = departure['delay']
         else:
             delay = 0
-        departure[u'departureTimeMinutes'] = relative_time.seconds // 60 + delay
+        departure[u'departureTimeMinutes'] = relative_time // datetime.timedelta(seconds=60) + delay
     return departures
 
 
