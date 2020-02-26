@@ -187,7 +187,7 @@ def get_locations(query):
 
     """
     try:
-        query = int(query)  # converts station ids to int
+        query = f"{id_prefix}{int(query)}"  # converts old style station id to new style station id
     except(ValueError):  # happens if it is a station name
         url = query_url_name.format(name=query)
     else:  # happens if it is a station id
