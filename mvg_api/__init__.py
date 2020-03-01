@@ -25,9 +25,9 @@ class ApiError(Exception):
         self.reason = reason
 
     def __str__(self):
-        out = f"Got status code {self.code}"
+        out = "Got status code {}".format(self.code)
         if self.reason:
-            out += f" with response {self.reason}"
+            out += " with response {}".format(self.reason)
         return out
 
 
@@ -187,7 +187,7 @@ def get_locations(query):
 
     """
     try:
-        query = f"{id_prefix}{int(query)}"  # converts old style station id to new style station id
+        query = "{}{}".format(id_prefix, int(query))  # converts old style station id to new style station id
     except(ValueError):  # happens if it is a station name
         url = query_url_name.format(name=query)
     else:  # happens if it is a station id
