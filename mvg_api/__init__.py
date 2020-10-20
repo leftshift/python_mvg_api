@@ -212,7 +212,11 @@ def get_stations(station):
 def get_route(start, dest,
               time=None, arrival_time=False,
               max_walk_time_to_start=None, max_walk_time_to_dest=None,
-              change_limit=None):
+              change_limit=None,
+              ubahn=True,
+              bus=True,
+              tram=True,
+              sbahn=True):
     """Plans a route from start to dest
 
     Change in 1.3.2: accepts both 'old-style' integer IDs which were used
@@ -233,6 +237,14 @@ def get_route(start, dest,
         Maximum time of walking in minutes required to reach the start/dest.
     changeLimit : int, optional
         Specifies the maximum amount of changes.
+    ubahn: bool, optional
+        Specifies if the subway(UBahn) should be considered in the route
+    bus: bool, optional
+        Specifies if the bus should be considered in the route
+    tram: bool, optional
+        Specifies if the tram should be considered in the route
+    sbahn: bool, optional
+        Specifies if the SBahn should be considered in the route
     """
     url = routing_url
     options = []
@@ -278,6 +290,15 @@ def get_route(start, dest,
     if change_limit is not None:  # 'if change_limit:' would not work for 0
         if isinstance(change_limit, int):
             options.append("changeLimit=" + str(change_limit))
+
+    if not ubahn:
+        options.append("transportTypeUnderground=false")
+    if not bus:
+        options.append("transportTypeBus=false")
+    if not tram:
+        options.append("transportTypeTram=false")
+    if not sbahn:
+        options.append("transportTypeSBahn=false")
 
     options_url = "&".join(options)
     url = routing_url + options_url
