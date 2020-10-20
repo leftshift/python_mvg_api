@@ -4,7 +4,6 @@ import requests
 import datetime
 from time import mktime
 
-api_key = "5af1beca494712ed38d313714d4caff6"
 query_url_name = "https://www.mvg.de/api/fahrinfo/location/queryWeb?q={name}"  # for station names
 query_url_id = "https://www.mvg.de/api/fahrinfo/location/query?q={id}"  # for station ids
 departure_url = "https://www.mvg.de/api/fahrinfo/departure/{id}?footway=0"
@@ -56,7 +55,6 @@ def _perform_api_request(url):
     resp = requests.get(
             url,
             headers={
-                'X-MVG-Authorization-Key': api_key,
                 'User-Agent': 'python-mvg-api/1 (+https://github.com/leftshift/python_mvg_api)',
                 'Accept': 'application/json'
                 }
