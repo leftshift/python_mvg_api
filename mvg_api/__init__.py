@@ -6,7 +6,7 @@ from time import mktime
 
 query_url_name = "https://www.mvg.de/api/fahrinfo/location/queryWeb?q={name}"  # for station names
 query_url_id = "https://www.mvg.de/api/fahrinfo/location/query?q={id}"  # for station ids
-departure_url = "https://www.mvg.de/api/fahrinfo/departure/{id}?footway=0"
+departure_url = "https://www.mvg.de/api/fahrinfo/departure/{id}?footway={offset}"
 nearby_url = "https://www.mvg.de/api/fahrinfo/location/nearby?latitude={lat}&longitude={lon}"
 routing_url = "https://www.mvg.de/api/fahrinfo/routing/?"
 interruptions_url = "https://www.mvg.de/.rest/betriebsaenderungen/api/interruptions"
@@ -308,8 +308,9 @@ def get_route(start, dest,
     return results["connectionList"]
 
 
-def get_departures(station_id):
-    """Get the next departures for `station_id`.
+def get_departures(station_id, timeoffset=0):
+    """Get the next departures for `station_id`. Optionally, define `timeoffset`
+    to not show departures sooner than a number of minutes.
 
     Change in 1.3.2: accepts both 'old-style' integer IDs which were used
     by the API before this version and the new string IDs which
@@ -343,7 +344,7 @@ def get_departures(station_id):
         raise TypeError("Please give the int station_id of the station.\
                          You can find it out by running \
                          get_id_for_station('Station name')")
-    url = departure_url.format(id=station_id)
+    url = departure_url.format(id=station_id, offset=timeoffset)
     departures = _perform_api_request(url)['departures']
     for departure in departures:
         # For some reason, mvg gives you a Unix timestamp, but in milliseconds.
@@ -386,8 +387,8 @@ class Station:
             self.latitude = matching_stations[0]["latitude"]
             self.longitude = matching_stations[0]["longitude"]
 
-    def get_departures(self):
-        return get_departures(self.id)
+    def get_departures(self, timeoffset=0):
+        return get_departures(self.id, timeoffset)
 
     def __repr__(self):
         return "Station(id=%s, name='%s')" % (self.id, self.name)
