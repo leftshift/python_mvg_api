@@ -387,8 +387,8 @@ class Station:
             self.latitude = matching_stations[0]["latitude"]
             self.longitude = matching_stations[0]["longitude"]
 
-    def get_departures(self):
-        return get_departures(self.id)
+    def get_departures(self, timeoffset=0):
+        return get_departures(self.id, timeoffset)
 
     def __repr__(self):
         return "Station(id=%s, name='%s')" % (self.id, self.name)
