@@ -392,7 +392,7 @@ def get_lines(station_id):
         raise TypeError("Please give the int station_id of the station.\
                          You can find it out by running \
                          get_id_for_station('Station name')")
-    url = departure_url.format(id=station_id)
+    url = departure_url.format(id=station_id, offset=0)
     return _perform_api_request(url)['servingLines']
 
 
