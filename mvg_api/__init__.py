@@ -359,6 +359,43 @@ def get_departures(station_id, timeoffset=0):
     return departures
 
 
+def get_lines(station_id):
+    """Get the lines being served for `station_id`.
+
+    Change in 1.3.2: accepts both 'old-style' integer IDs which were used
+    by the API before this version and the new string IDs which
+    look like `de:09162:6`.
+    
+    To get the `station_id` associated with a station name,
+    use :func:`get_id_for_station`.
+
+    Returns a list like::
+
+        [
+            {
+                "destination" : "Aying",
+                "sev" : false,
+                "partialNet" : "ddb",
+                "product" : "SBAHN",
+                "lineNumber" : "S7",
+                "divaId" : "92M07"
+            },
+        ]
+
+    Note: The api seemingly only returns a single object per 
+    line served, meaning that both directions of a line are  
+    represented only by a single line in the response.
+    """
+    if isinstance(station_id, int):
+        station_id = _convert_id(station_id)
+    elif not _station_sanity_check(station_id):
+        raise TypeError("Please give the int station_id of the station.\
+                         You can find it out by running \
+                         get_id_for_station('Station name')")
+    url = departure_url.format(id=station_id, offset=0)
+    return _perform_api_request(url)['servingLines']
+
+
 def get_interruptions():
     url = interruptions_url
     interruptions = _perform_api_request(url)
@@ -389,6 +426,9 @@ class Station:
 
     def get_departures(self, timeoffset=0):
         return get_departures(self.id, timeoffset)
+
+    def get_lines(self):
+        return get_lines(self.id)
 
     def __repr__(self):
         return "Station(id=%s, name='%s')" % (self.id, self.name)
