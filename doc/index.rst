@@ -14,7 +14,7 @@ python_mvg_api – Munich Public Transport made simple
 
 Intro
 -----
-Not too long ago, MVG (aka Münchner Verkehrsgesellschaft) relaunched their `Website <http://mvg.de>`_, which now actually utilizes a JSON api! (I know, crazy, right?) This python module tries to provide easy to use access to most aspects of the mvg api[1].
+Not too long ago, MVG (aka Münchner Verkehrsgesellschaft) relaunched their `Website <http://mvg.de>`_, which now actually utilizes a JSON api! (I know, crazy, right?) This python module tries to provide easy to use access to most aspects of the mvg api.
 
 
 It offers:
@@ -31,7 +31,18 @@ It offers:
 
 Take a look at example.py, it shows some basic concepts, or at the rest of the docs, where everything should be adequately documented.
 
-.. [1] mvg.de uses stuff like an api key (although *they only give it to themselves*) and has some other quirks.
+Note on the usage policy
+------------------------
+From https://www.mvg.de/impressum.html:
+
+```
+[...] Die Verarbeitung unserer Inhalte oder Daten durch Dritte erfordert unsere ausdrückliche Zustimmung. Für private, nicht-kommerzielle Zwecke, wird eine gemäßigte Nutzung ohne unsere ausdrückliche Zustimmung geduldet. Jegliche Form von Data-Mining stellt keine gemäßigte Nutzung dar.[...]
+```
+
+In other words: Private, noncomercial, moderate use of the API is tolerated. They don't consider data mining as moderate use.
+
+(Disclaimer: I am not a lawyer, this isn't legal advice)
+
 
 Module documentation
 --------------------
