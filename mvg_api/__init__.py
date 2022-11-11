@@ -217,7 +217,7 @@ def get_route(start, dest,
               sbahn=True):
     """Plans a route from start to dest
 
-    Change in 1.3.2: accepts both 'old-style' integer IDs which were used
+    Change in 1.2.2: accepts both 'old-style' integer IDs which were used
     by the API before this version and the new string IDs which
     look like `de:09162:6`.
 
@@ -312,7 +312,7 @@ def get_departures(station_id, timeoffset=0):
     """Get the next departures for `station_id`. Optionally, define `timeoffset`
     to not show departures sooner than a number of minutes.
 
-    Change in 1.3.2: accepts both 'old-style' integer IDs which were used
+    Change in 1.2.2: accepts both 'old-style' integer IDs which were used
     by the API before this version and the new string IDs which
     look like `de:09162:6`.
 
@@ -362,10 +362,10 @@ def get_departures(station_id, timeoffset=0):
 def get_lines(station_id):
     """Get the lines being served for `station_id`.
 
-    Change in 1.3.2: accepts both 'old-style' integer IDs which were used
+    Change in 1.2.2: accepts both 'old-style' integer IDs which were used
     by the API before this version and the new string IDs which
     look like `de:09162:6`.
-    
+
     To get the `station_id` associated with a station name,
     use :func:`get_id_for_station`.
 
@@ -382,8 +382,8 @@ def get_lines(station_id):
             },
         ]
 
-    Note: The api seemingly only returns a single object per 
-    line served, meaning that both directions of a line are  
+    Note: The api seemingly only returns a single object per
+    line served, meaning that both directions of a line are
     represented only by a single line in the response.
     """
     if isinstance(station_id, int):
