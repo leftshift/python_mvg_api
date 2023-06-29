@@ -1,3 +1,12 @@
+# **End of the line**
+Unfortunately, the API endpoint used by this library is no longer available (more details in #31). This repo is now archived.
+
+As an alternative, consider https://github.com/mondbaron/mvg, which uses a newer API endpoint and supports async usage.
+
+Thank you to everyone who used this library and contributed over the years! Bye!
+
+*Below follows the old readme:*
+
 # python_mvg_api
 
 A library for fetching departures, routes and service interruptions from Munich Transport Authority MVG, using the newer JSON-api on mvg.de
